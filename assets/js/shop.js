@@ -30,8 +30,8 @@
   var PMIN = Math.floor(Math.min.apply(null, CATALOG.map(function (p) { return p.usd; })));
   var PMAX = Math.ceil(Math.max.apply(null, CATALOG.map(function (p) { return p.usd; })));
 
-  function defaults(orden) { return { cat: [], talla: [], color: [], min: PMIN, max: PMAX, disp: false, orden: orden || 'novedades' }; }
-  function clone(s) { return { cat: s.cat.slice(), talla: s.talla.slice(), color: s.color.slice(), min: s.min, max: s.max, disp: s.disp, orden: s.orden }; }
+  function defaults(orden) { return { q: '', cat: [], talla: [], color: [], min: PMIN, max: PMAX, disp: false, orden: orden || 'novedades' }; }
+  function clone(s) { return { q: s.q || '', cat: s.cat.slice(), talla: s.talla.slice(), color: s.color.slice(), min: s.min, max: s.max, disp: s.disp, orden: s.orden }; }
 
   /* ---------- URL <-> estado ---------- */
   function fromURL() {
@@ -45,11 +45,13 @@
     if (!isNaN(mx)) s.max = Math.max(Math.min(mx, PMAX), PMIN);
     if (s.min > s.max) { var t = s.min; s.min = s.max; s.max = t; }
     s.disp = q.get('disp') === '1';
+    s.q = (q.get('q') || '').trim().slice(0, 60);
     if (SORTS.indexOf(q.get('orden')) > -1) s.orden = q.get('orden');
     return s;
   }
   function toURL(s) {
     var q = new URLSearchParams();
+    if (s.q) q.set('q', s.q);
     if (s.cat.length) q.set('cat', s.cat.join(','));
     if (s.talla.length) q.set('talla', s.talla.join(','));
     if (s.color.length) q.set('color', s.color.join(','));
@@ -63,6 +65,7 @@
 
   /* ---------- filtrado y orden ---------- */
   function match(p, s, ignore) {
+    if (s.q && !M.matchesQuery(p, s.q)) return false;
     if (ignore !== 'cat' && s.cat.length && s.cat.indexOf(p.catSlug) < 0) return false;
     if (s.talla.length && !(p.sizes || []).some(function (z) { return s.talla.indexOf(z) > -1; })) return false;
     if (s.color.length && !(p.colors || []).some(function (c) { return s.color.indexOf(c) > -1; })) return false;
@@ -73,6 +76,11 @@
   var collator = new Intl.Collator('es', { sensitivity: 'base' });
   function results(s) {
     var list = CATALOG.filter(function (p) { return match(p, s); });
+    // con una búsqueda activa y el orden por defecto, se ordena por relevancia (igual que el buscador del header)
+    if (s.q && s.orden === 'novedades') {
+      var rank = M.searchProducts(s.q).map(function (p) { return p.id; });
+      return list.sort(function (a, b) { return rank.indexOf(a.id) - rank.indexOf(b.id); });
+    }
     var by = {
       'novedades': function (a, b) { return (b.added || '').localeCompare(a.added || ''); },
       'precio-asc': function (a, b) { return a.usd - b.usd; },
@@ -82,7 +90,7 @@
     return list.sort(by);
   }
   function activeCount(s) {
-    return s.cat.length + s.talla.length + s.color.length + ((s.min > PMIN || s.max < PMAX) ? 1 : 0) + (s.disp ? 1 : 0);
+    return (s.q ? 1 : 0) + s.cat.length + s.talla.length + s.color.length + ((s.min > PMIN || s.max < PMAX) ? 1 : 0) + (s.disp ? 1 : 0);
   }
   var plural = function (n) { return n === 1 ? 'producto' : 'productos'; };
   var usd = function (n) { return '$' + n; };
@@ -109,7 +117,7 @@
   var applied = fromURL(), draft = null, drawerOpen = false;
 
   function readUI() {
-    var s = defaults(applied.orden);
+    var s = defaults(applied.orden); s.q = applied.q || '';   // la búsqueda no se edita desde los filtros
     fCat.querySelectorAll('input:checked').forEach(function (i) { s.cat.push(i.value); });
     document.querySelectorAll('#fControls .f-pill[aria-pressed="true"]').forEach(function (b) { s[b.dataset.k].push(b.dataset.v); });
     s.min = Math.min(+pMin.value, +pMax.value); s.max = Math.max(+pMin.value, +pMax.value);
@@ -144,6 +152,9 @@
     var list = results(applied);
     grid.innerHTML = list.map(function (p, i) { return M.productCard(p, { reveal: false, style: '--i:' + Math.min(i, 11) }); }).join('');
     grid.hidden = !list.length; empty.hidden = !!list.length;
+    var ep = empty.querySelector('p');
+    if (!ep.dataset.base) ep.dataset.base = ep.textContent;
+    ep.textContent = applied.q && !list.length ? 'No encontramos productos para “' + applied.q + '”' + (activeCount(applied) > 1 ? ' con estos filtros' : '') + '. Prueba con otra palabra o mira toda la tienda.' : ep.dataset.base;
     $('count').innerHTML = '<b>' + list.length + '</b> ' + plural(list.length);
     var n = activeCount(applied);
     $('fBadge').textContent = n || '';
@@ -156,6 +167,7 @@
   function paintChips() {
     var s = applied, out = [];
     var chip = function (label, k, v) { out.push('<button type="button" class="chip-x" data-k="' + k + '" data-v="' + esc(v) + '" aria-label="Quitar filtro ' + esc(label) + '">' + esc(label) + '<i aria-hidden="true">×</i></button>'); };
+    if (s.q) chip('Búsqueda: “' + s.q + '”', 'q', '');
     s.cat.forEach(function (c) { chip(CAT_NAME[c], 'cat', c); });
     s.talla.forEach(function (t) { chip('Talla ' + t, 'talla', t); });
     s.color.forEach(function (c) { chip(COLORS[c].name, 'color', c); });
@@ -201,6 +213,7 @@
     var b = e.target.closest('button'); if (!b) return;
     var s = clone(applied), k = b.dataset.k, v = b.dataset.v;
     if (k === 'all') s = defaults(applied.orden);
+    else if (k === 'q') s.q = '';
     else if (k === 'precio') { s.min = PMIN; s.max = PMAX; }
     else if (k === 'disp') s.disp = false;
     else s[k] = s[k].filter(function (x) { return x !== v; });

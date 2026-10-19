@@ -29,6 +29,47 @@
     if (!p.care) p.care = CARE[p.cat] || [];
   });
   M.bySlug = function (slug) { for (var i = 0; i < M.catalog.length; i++) if (M.catalog[i].slug === slug) return M.catalog[i]; return null; };
+  /* ---------- búsqueda de texto (header y tienda usan la misma lógica) ---------- */
+  M.norm = function (t) { return String(t || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[^a-z0-9ñ]+/g, ' ').trim(); };
+  // palabras que la gente usa para buscar cada categoría
+  var CAT_WORDS = { Tops: 'top blusa camisa franela', Pantalones: 'pantalon', Chaquetas: 'chaqueta abrigo', Zapatos: 'zapato calzado' };
+  function fields(p) {
+    var colors = (p.colors || []).concat(p.variantColors || []).map(function (c) { return M.colors[c] ? M.colors[c].name : c; });
+    var tag = p.tag === 'new' ? 'nuevo new novedad' : p.tag === 'best' ? 'bestseller mas vendido favorito' : '';
+    return [M.norm(p.name),                                              // 0 · nombre
+            M.norm([p.cat, CAT_WORDS[p.cat], p.keywords].join(' ')),     // 1 · categoría y palabras clave
+            M.norm(colors.join(' ')),                                    // 2 · colores
+            M.norm([p.desc, p.material, tag].join(' '))];                // 3 · descripción
+  }
+  // coincidencia que tolera plurales ("jeans" → "jean", "tacones" → "tacon")
+  function tokenHit(hay, t) {
+    if (hay.indexOf(t) > -1) return true;
+    if (t.length > 4 && /es$/.test(t) && hay.indexOf(t.slice(0, -2)) > -1) return true;
+    if (t.length > 3 && /s$/.test(t) && hay.indexOf(t.slice(0, -1)) > -1) return true;
+    return false;
+  }
+  // nivel de la peor palabra: 0 = todas en el nombre … 3 = alguna solo en la descripción · -1 = no coincide
+  function level(p, q) {
+    var tokens = M.norm(q).split(' ').filter(Boolean); if (!tokens.length) return 0;
+    var f = fields(p), worst = 0;
+    for (var i = 0; i < tokens.length; i++) {
+      var lv = -1;
+      for (var k = 0; k < f.length; k++) if (tokenHit(f[k], tokens[i])) { lv = k; break; }
+      if (lv < 0) return -1;
+      if (lv > worst) worst = lv;
+    }
+    return worst;
+  }
+  M.matchesQuery = function (p, q) { return level(p, q) > -1; };
+  /* resultados ordenados por relevancia */
+  M.searchProducts = function (q) {
+    var nq = M.norm(q); if (!nq) return [];
+    return M.catalog.map(function (p) {
+      var lv = level(p, q); if (lv < 0) return null;
+      var score = lv * 2 + (M.norm(p.name).indexOf(nq) === 0 ? 0 : 1) + (p.stock === false ? .5 : 0);
+      return { p: p, score: score };
+    }).filter(Boolean).sort(function (a, b) { return a.score - b.score || a.p.name.localeCompare(b.p.name, 'es'); }).map(function (r) { return r.p; });
+  };
   M.productUrl = function (p) { return 'products/' + encodeURIComponent(p.slug); };
   M.imagesOf = function (p, color) {
     if (color && p.colorImages && p.colorImages[color]) return p.colorImages[color];

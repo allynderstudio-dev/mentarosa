@@ -89,6 +89,7 @@ window.MENTAROSA_CATALOG = [
    Información de ficha de producto (PDP) — DATOS DE EJEMPLO
    ---------------------------------------------------------------------
    Se fusiona con cada producto del catálogo por su id (ver site.js).
+   keywords      (opcional) palabras extra para el buscador (ej. 'tenis sneakers')
    slug          URL de la ficha → /products/<slug>
    desc          descripción breve
    details       lista de detalles
@@ -110,18 +111,18 @@ window.MENTAROSA_CARE = {
 };
 
 window.MENTAROSA_DETAILS = {
-  p1:  { slug:'tenis-cacao-crema', desc:'Tenis de corte bajo en cacao y crema, el par que combina con todo: jeans, faldas y vestidos.',
+  p1:  { keywords:'tenis sneakers zapatillas deportivos', slug:'tenis-cacao-crema', desc:'Tenis de corte bajo en cacao y crema, el par que combina con todo: jeans, faldas y vestidos.',
          details:['Corte bajo con cordones', 'Suela de goma antideslizante', 'Plantilla acolchada'], material:'Exterior sintético efecto cuero · suela de goma',
          inventory:{ '*|35':0, '*|40':2 } },
-  p2:  { slug:'samba-leopardo', desc:'Clásicos con un giro: base crema, franjas animal print y suela cacao para un look urbano y coqueto.',
+  p2:  { keywords:'tenis sneakers zapatillas deportivos', slug:'samba-leopardo', desc:'Clásicos con un giro: base crema, franjas animal print y suela cacao para un look urbano y coqueto.',
          details:['Franjas laterales animal print', 'Puntera de gamuza', 'Suela de goma cacao'], material:'Exterior sintético y gamuza · suela de goma',
          inventory:{ '*|39':1 } },
-  p3:  { slug:'slingback-rosa', desc:'Slingback de punta fina en rosa charol con detalle dorado en el tacón. Para brillar de día y de noche.',
+  p3:  { keywords:'tacon tacones zapatos de tacon', slug:'slingback-rosa', desc:'Slingback de punta fina en rosa charol con detalle dorado en el tacón. Para brillar de día y de noche.',
          details:['Tacón de aguja de 9 cm', 'Tira trasera con hebilla dorada', 'Punta fina'], material:'Exterior efecto charol · plantilla sintética' },
   p4:  { slug:'top-satinado-crema', desc:'Top de tirantes con caída satinada en tono crema. Delicado, fresco y fácil de combinar.',
          details:['Tirantes finos ajustables', 'Escote recto', 'Largo a la cintura'], material:'100% poliéster satinado',
          inventory:{ '*|L':0, '*|XS':1 } },
-  p5:  { slug:'jean-wide-leg', desc:'Jean de tiro alto y pierna amplia que estiliza la figura. Tu básico favorito, ahora más cómodo.',
+  p5:  { keywords:'jean jeans', slug:'jean-wide-leg', desc:'Jean de tiro alto y pierna amplia que estiliza la figura. Tu básico favorito, ahora más cómodo.',
          details:['Tiro alto', 'Pierna amplia hasta el tobillo', 'Cinco bolsillos'], material:'98% algodón · 2% elastano' },
   p6:  { slug:'bomber-rosa-suave', desc:'Bomber ligera en rosa suave con puños elásticos: el toque dulce para tus looks deportivos.',
          details:['Cierre frontal', 'Puños y cintura elásticos', 'Bolsillos laterales'], material:'Exterior poliéster · forro ligero' },
@@ -137,16 +138,16 @@ window.MENTAROSA_DETAILS = {
          details:['Encaje en escote y mangas', 'Cierre de broches', 'Ajuste ceñido'], material:'Poliamida y elastano' },
   p11: { slug:'camisa-oversize-rayas', desc:'Camisa oversize a rayas, fresca y relajada. Úsala abierta, anudada o por dentro.',
          details:['Corte oversize', 'Botones frontales', 'Puños con botón'], material:'100% algodón' },
-  p12: { slug:'jean-mom-fit', desc:'Mom fit de tiro alto con calce relajado y bota tobillera. Un clásico que nunca falla.',
+  p12: { keywords:'jean jeans', slug:'jean-mom-fit', desc:'Mom fit de tiro alto con calce relajado y bota tobillera. Un clásico que nunca falla.',
          details:['Tiro alto', 'Calce relajado en cadera', 'Bota tobillera'], material:'100% algodón' },
-  p13: { slug:'palazzo-satinado', desc:'Palazzo de caída fluida con brillo satinado. Elegante, cómodo y muy favorecedor.',
+  p13: { keywords:'pantalon ancho', slug:'palazzo-satinado', desc:'Palazzo de caída fluida con brillo satinado. Elegante, cómodo y muy favorecedor.',
          details:['Cintura elástica', 'Pierna amplia y fluida', 'Largo hasta el piso'], material:'100% poliéster satinado',
          variantColors:['rosa','dorado'], inventory:{ 'dorado|XS':0, 'dorado|S':0 } },
-  p14: { slug:'chaqueta-denim-cropped', desc:'Chaqueta denim corta para lucir tu cintura. La tercera pieza perfecta.',
+  p14: { keywords:'jean denim', slug:'chaqueta-denim-cropped', desc:'Chaqueta denim corta para lucir tu cintura. La tercera pieza perfecta.',
          details:['Largo cropped', 'Botones metálicos', 'Bolsillos de parche'], material:'100% algodón denim' },
   p15: { slug:'blazer-rosa-estructurado', desc:'Blazer rosa de hombros estructurados. Poder y dulzura en una sola prenda.',
          details:['Hombros estructurados', 'Cierre de un botón', 'Forro interior'], material:'Poliéster y viscosa' },
-  p16: { slug:'botin-cacao', desc:'Botín cacao de tacón medio, cómodo para todo el día y lindo con todo.',
+  p16: { keywords:'botin botines botas tacon', slug:'botin-cacao', desc:'Botín cacao de tacón medio, cómodo para todo el día y lindo con todo.',
          details:['Tacón cuadrado de 5 cm', 'Cierre lateral', 'Puntera redonda'], material:'Exterior sintético efecto cuero',
          inventory:{ '*|36':0 } }
 };
