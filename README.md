@@ -25,6 +25,10 @@ python3 serve.py
 Abre http://localhost:8080 (imita las rutas de Vercel).
 
 ## Publicar
+El repositorio está conectado a Vercel: cada `git push` a la rama `main` publica el sitio automáticamente.
+
 ```bash
-npx vercel --prod
+git add -A && git commit -m "Describe el cambio" && git push
 ```
+
+Alternativa manual (sin pasar por GitHub): `npx vercel --prod`
