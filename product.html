@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Template único de ficha de producto: /products/<slug> (Vercel reescribe la ruta a este archivo).
+     <base> hace que los enlaces y assets relativos funcionen desde /products/... -->
+<base href="/">
+<title>Producto · Mentarosa Boutique</title>
+<meta name="description" content="Mentarosa Boutique: calzado, ropa y accesorios con un toque rosa.">
+<link rel="icon" type="image/png" href="assets/logo-mentarosa-circle.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=DM+Serif+Display:ital@1&family=Fredoka:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/site.css">
+<link rel="stylesheet" href="assets/css/pdp.css">
+<script src="assets/js/transition.js"></script>
+</head>
+<body>
+
+<!-- ===== HEADER ===== -->
+<header class="header">
+  <a class="brand" href="index.html" aria-label="Mentarosa Boutique">
+    <img src="assets/logo-mentarosa.png" alt="Mentarosa Boutique">
+  </a>
+  <nav class="nav" id="nav" aria-label="Principal">
+    <a href="index.html">Inicio</a>
+    <a href="shop.html?orden=novedades">Novedades</a>
+    <a href="shop.html?cat=tops">Tops</a>
+    <a href="shop.html?cat=pantalones">Pantalones</a>
+    <a href="shop.html?cat=chaquetas">Chaquetas</a>
+    <a href="shop.html?cat=zapatos">Zapatos</a>
+  </nav>
+  <div class="actions">
+    <button class="icon-btn" aria-label="Buscar"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="m20 20-3.8-3.8"/></svg></button>
+    <a class="icon-btn wl" href="wishlist" aria-label="Favoritos"><svg viewBox="0 0 24 24"><path d="M12 20.5C5 15 2.5 11.5 2.5 8.3 2.5 5.6 4.5 3.8 7 3.8c2 0 4 1.2 5 3 1-1.8 3-3 5-3 2.5 0 4.5 1.8 4.5 4.5 0 3.200-2.500 6.700-9.500 12.200Z"/></svg><span class="badge wl-badge" hidden>0</span></a>
+    <button class="icon-btn menu-btn" id="menuBtn" aria-label="Menú" aria-expanded="false" aria-controls="nav"><svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+    <button class="icon-btn cart" aria-label="Carrito"><svg viewBox="0 0 24 24"><path d="M5 8h14l-1.2 11.2a1.5 1.5 0 0 1-1.500 1.300H7.700a1.500 1.500 0 0 1-1.500-1.300L5 8Z"/><path d="M9 8V6.500a3 3 0 0 1 6 0V8"/></svg><span class="badge" hidden>0</span></button>
+  </div>
+</header>
+
+<main class="pdp" id="main">
+  <!-- ===== FICHA ===== -->
+  <div class="pdp-wrap" id="pdp" hidden>
+    <nav class="crumbs" aria-label="Ruta de navegación">
+      <a href="index.html">Inicio</a><span aria-hidden="true">/</span>
+      <a id="crumbCat" href="shop.html">Tienda</a><span aria-hidden="true">/</span>
+      <span id="crumbName" aria-current="page"></span>
+    </nav>
+
+    <div class="pdp-grid">
+      <!-- galería -->
+      <section class="gallery" aria-label="Fotos del producto">
+        <div class="g-thumbs" id="thumbs" role="tablist" aria-label="Miniaturas"></div>
+        <div class="g-main" id="gMain">
+          <div class="g-stage" id="gStage"></div>
+          <span class="g-tag" id="gTag" hidden></span>
+          <button class="g-btn g-zoom" type="button" id="gZoom" aria-label="Ampliar foto"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></button>
+          <div class="g-nav" id="gNav">
+            <button class="g-btn" type="button" id="gPrev" aria-label="Foto anterior"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
+            <span class="g-count" id="gCount" aria-live="polite"></span>
+            <button class="g-btn" type="button" id="gNext" aria-label="Foto siguiente"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
+          </div>
+          <svg class="g-spark" viewBox="0 0 40 48" aria-hidden="true"><path d="M20 2c2 12 6 16 18 18-12 2-16 6-18 18-2-12-6-16-18-18C14 18 18 14 20 2Z" fill="#F7D08A"/><path d="M34 34c1 5 3 7 8 8-5 1-7 3-8 8-1-5-3-7-8-8 5-1 7-3 8-8Z" fill="#EF4479"/></svg>
+        </div>
+      </section>
+
+      <!-- información -->
+      <section class="info" aria-labelledby="pName">
+        <div class="i-top"><a class="i-cat" id="iCat" href="shop.html"></a><span class="i-tag" id="iTag" hidden></span></div>
+        <h1 class="i-name" id="pName"></h1>
+        <div class="i-price" id="iPrice"></div>
+        <p class="i-avail" id="iAvail" aria-live="polite"><i></i><span></span></p>
+        <p class="i-lead" id="iDesc"></p>
+
+        <div class="opt" id="optColor" hidden>
+          <div class="opt-head"><span class="opt-label">Color: <b id="colorName"></b></span></div>
+          <div class="opt-list" id="colors" role="radiogroup" aria-label="Color"></div>
+        </div>
+        <div class="opt opt-single" id="singleColor" hidden>
+          <div class="opt-head"><span class="opt-label">Color: <b id="singleColorName"></b></span></div>
+        </div>
+        <div class="opt" id="optSize" hidden>
+          <div class="opt-head"><span class="opt-label">Talla: <b id="sizeName">elige una</b></span>
+            <a class="opt-help" href="#" data-placeholder="Guía de tallas">Guía de tallas</a></div>
+          <div class="opt-list" id="sizes" role="radiogroup" aria-label="Talla"></div>
+        </div>
+
+        <div class="buy">
+          <div class="qty" role="group" aria-label="Cantidad">
+            <button type="button" id="qMinus" aria-label="Quitar una unidad">−</button>
+            <input id="qty" type="number" inputmode="numeric" min="1" max="10" value="1" aria-label="Cantidad">
+            <button type="button" id="qPlus" aria-label="Agregar una unidad">+</button>
+          </div>
+          <button class="btn btn-primary buy-add" type="button" id="addBtn"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 8h14l-1.2 11.2a1.5 1.5 0 0 1-1.5 1.3H7.7a1.5 1.5 0 0 1-1.5-1.3L5 8Z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8"/></svg><span>Agregar al carrito</span></button>
+          <button class="buy-fav" type="button" id="favBtn" aria-pressed="false" aria-label="Guardar en favoritos"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20.5C5 15 2.5 11.5 2.5 8.3 2.5 5.6 4.5 3.8 7 3.8c2 0 4 1.2 5 3 1-1.8 3-3 5-3 2.5 0 4.5 1.8 4.5 4.5 0 3.2-2.5 6.7-9.5 12.2Z"/></svg></button>
+        </div>
+        <p class="buy-msg" id="buyMsg" role="status" aria-live="polite"></p>
+        <p class="i-help">¿Dudas con tu talla o tu pedido? <a href="https://wa.me/message/2PVRC4MJKY7KF1" target="_blank" rel="noopener noreferrer">Escríbenos por WhatsApp</a></p>
+
+        <div class="acc">
+          <details open><summary>Detalles del producto<i aria-hidden="true"></i></summary><div class="acc-body"><ul id="aDetails"></ul></div></details>
+          <details><summary>Materiales<i aria-hidden="true"></i></summary><div class="acc-body"><p id="aMaterial"></p></div></details>
+          <details><summary>Cuidados<i aria-hidden="true"></i></summary><div class="acc-body"><ul id="aCare"></ul></div></details>
+          <details><summary>Cambios y devoluciones<i aria-hidden="true"></i></summary><div class="acc-body">
+            <!-- PLACEHOLDER: reemplazar por la política oficial de Mentarosa -->
+            <p class="todo">La política de cambios y devoluciones de Mentarosa está pendiente de publicarse. Antes de comprar, consúltanos las condiciones por WhatsApp o en la tienda (CC Galerías Innamar, local 20).</p>
+          </div></details>
+        </div>
+      </section>
+    </div>
+
+    <!-- relacionados -->
+    <section class="related" aria-labelledby="relTitle">
+      <div class="rel-head">
+        <div><div class="eyebrow"><i></i>Para completar tu look</div>
+        <h2 class="rel-title" id="relTitle">También te puede <em>gustar</em></h2></div>
+        <a class="btn btn-secondary" id="relMore" href="shop.html">Ver más</a>
+      </div>
+      <div class="rel-grid" id="relGrid"></div>
+    </section>
+  </div>
+
+  <!-- ===== PRODUCTO INEXISTENTE ===== -->
+  <section class="nf" id="notFound" hidden aria-labelledby="nfTitle">
+    <svg viewBox="0 0 140 120" fill="none" aria-hidden="true">
+      <rect x="22" y="34" width="96" height="74" rx="22" fill="#FFFFFF" stroke="#EF4479" stroke-width="5"/>
+      <path d="M50 34c0-11 9-20 20-20s20 9 20 20" stroke="#EF4479" stroke-width="5" stroke-linecap="round"/>
+      <path d="M56 66l28 20M84 66 56 86" stroke="#FBC9D9" stroke-width="6" stroke-linecap="round"/>
+      <path d="M118 8c1 7 4 10 11 11-7 1-10 4-11 11-1-7-4-10-11-11 7-1 10-4 11-11Z" fill="#F7D08A"/>
+    </svg>
+    <div class="eyebrow"><i></i>Producto no encontrado</div>
+    <h1 id="nfTitle">Este producto se nos <em>escapó</em></h1>
+    <p>No encontramos el producto que buscas. Puede que el enlace esté mal escrito o que ya no esté disponible.</p>
+    <div class="nf-cta"><a class="btn btn-primary" href="shop.html">Ver la tienda</a><a class="btn btn-secondary" href="index.html">Volver al inicio</a></div>
+  </section>
+</main>
+
+<!-- ===== VISOR AMPLIADO ===== -->
+<dialog class="lb" id="lightbox" aria-label="Foto ampliada">
+  <button class="lb-close g-btn" type="button" id="lbClose" aria-label="Cerrar"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+  <button class="lb-prev g-btn" type="button" id="lbPrev" aria-label="Foto anterior"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
+  <figure class="lb-fig" id="lbFig"></figure>
+  <button class="lb-next g-btn" type="button" id="lbNext" aria-label="Foto siguiente"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
+  <p class="lb-count" id="lbCount"></p>
+</dialog>
+
+<!-- ===== FOOTER ===== -->
+<footer class="foot" id="contacto">
+  <div class="foot-wrap">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <a class="logo" href="index.html" aria-label="Mentarosa Boutique, ir al inicio"><img src="assets/logo-mentarosa.png" alt="" width="76" height="76"><span><b>Mentarosa</b><small>Boutique</small></span></a>
+        <p>Calzado, ropa, accesorios y jeans con un toque rosa que te representa.</p>
+        <div class="social">
+          <a href="https://www.instagram.com/mentarosa.sc/" target="_blank" rel="noopener noreferrer" aria-label="Instagram de Mentarosa (@mentarosa.sc)"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5.5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.2" cy="6.8" r="1" fill="currentColor" stroke="none"/></svg></a>
+          <a href="https://wa.me/message/2PVRC4MJKY7KF1" target="_blank" rel="noopener noreferrer" aria-label="Escríbenos por WhatsApp"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.4 3.6A10.4 10.4 0 0 0 3.3 16.4L2 22l5.8-1.5A10.4 10.4 0 0 0 20.4 3.6Z"/><path d="M8.6 7.8c.3-.6.8-.6 1.1-.6l.8 1.9c0 .4-.5.9-.8 1.3.6 1.1 1.5 2 2.7 2.7.4-.3.9-.8 1.300-.8l1.900.8c0 .3 0 .8-.6 1.100-.8.4-1.900.4-3.300-.3-1.700-.8-3.100-2.200-3.900-3.900-.7-1.400-.6-2.400-.2-3Z"/></svg></a>
+        </div>
+      </div>
+      <nav aria-label="Comprar">
+        <h3>Comprar</h3>
+        <ul>
+          <li><a href="shop.html?orden=novedades">Novedades</a></li>
+          <li><a href="shop.html?cat=tops">Tops</a></li>
+          <li><a href="shop.html?cat=pantalones">Pantalones</a></li>
+          <li><a href="shop.html?cat=chaquetas">Chaquetas</a></li>
+          <li><a href="shop.html?cat=zapatos">Zapatos</a></li>
+        </ul>
+      </nav>
+      <nav aria-label="Ayuda">
+        <h3>Ayuda</h3>
+        <ul>
+          <li><a href="https://wa.me/message/2PVRC4MJKY7KF1" target="_blank" rel="noopener noreferrer">Compra por WhatsApp</a></li>
+          <li><a href="#" data-placeholder="Guía de tallas">Guía de tallas</a></li>
+          <li><a href="#" data-placeholder="Envíos">Envíos</a></li>
+          <li><a href="#" data-placeholder="Preguntas frecuentes">Preguntas frecuentes</a></li>
+        </ul>
+      </nav>
+      <nav aria-label="Sobre Mentarosa">
+        <h3>Sobre Mentarosa</h3>
+        <ul>
+          <li><a href="#" data-placeholder="Nuestra historia">Nuestra historia</a></li>
+          <li><a href="#contacto-tienda">Visítanos</a></li>
+          <li><a href="https://www.instagram.com/mentarosa.sc/" target="_blank" rel="noopener noreferrer">Instagram</a></li>
+        </ul>
+      </nav>
+      <div class="foot-contact" id="contacto-tienda">
+        <h3>Contacto</h3>
+        <address>
+          <span><span class="k">Tienda</span>CC Galerías Innamar, local 20<br>Barrio Obrero, San Cristóbal<br>Estado Táchira, Venezuela</span>
+          <span><span class="k">WhatsApp</span><a href="https://wa.me/message/2PVRC4MJKY7KF1" target="_blank" rel="noopener noreferrer">Escríbenos aquí</a></span>
+          <span><span class="k">Instagram</span><a href="https://www.instagram.com/mentarosa.sc/" target="_blank" rel="noopener noreferrer">@mentarosa.sc</a></span>
+          <!-- PLACEHOLDER: añadir correo y teléfono oficiales cuando estén disponibles -->
+          <span class="todo"><span class="k">Correo · Teléfono</span>Por confirmar</span>
+        </address>
+      </div>
+    </div>
+    <div class="foot-legal">
+      <ul aria-label="Políticas">
+        <li><a href="#" data-placeholder="Política de privacidad">Privacidad</a></li>
+        <li><a href="#" data-placeholder="Cambios y devoluciones">Cambios y devoluciones</a></li>
+        <li><a href="#" data-placeholder="Términos y condiciones">Términos y condiciones</a></li>
+      </ul>
+      <a class="to-top" href="#" id="toTop">Volver arriba <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M6 11l6-6 6 6"/></svg></a>
+    </div>
+    <p class="foot-copy">© <span id="year">2026</span> Mentarosa Boutique · RIF V-27422158-1 · Todos los derechos reservados.</p>
+  </div>
+  <div class="foot-mark" aria-hidden="true">
+    <svg viewBox="0 0 1344 250" preserveAspectRatio="xMidYMax meet"><text x="0" y="236" font-size="272" textLength="1344" lengthAdjust="spacingAndGlyphs">MENTAROSA</text></svg>
+  </div>
+</footer>
+
+<script src="assets/js/catalog.js"></script>
+<script src="assets/js/store.js"></script>
+<script src="assets/js/site.js"></script>
+<script src="assets/js/cart-ui.js"></script>
+<script src="assets/js/pdp.js"></script>
+</body>
+</html>

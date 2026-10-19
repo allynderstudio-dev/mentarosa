@@ -1,0 +1,7 @@
+{
+  "rewrites": [
+    { "source": "/products/:slug", "destination": "/product.html" },
+    { "source": "/wishlist", "destination": "/wishlist.html" },
+    { "source": "/cart", "destination": "/cart.html" }
+  ]
+}

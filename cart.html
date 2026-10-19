@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tu carrito · Mentarosa Boutique</title>
+<meta name="description" content="Revisa los productos de tu carrito en Mentarosa Boutique.">
+<meta name="robots" content="noindex">
+<link rel="icon" type="image/png" href="assets/logo-mentarosa-circle.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=DM+Serif+Display:ital@1&family=Fredoka:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/site.css">
+<link rel="stylesheet" href="assets/css/lists.css">
+<script src="assets/js/transition.js"></script>
+</head>
+<body>
+
+<!-- ===== HEADER ===== -->
+<header class="header">
+  <a class="brand" href="index.html" aria-label="Mentarosa Boutique">
+    <img src="assets/logo-mentarosa.png" alt="Mentarosa Boutique">
+  </a>
+  <nav class="nav" id="nav" aria-label="Principal">
+    <a href="index.html">Inicio</a>
+    <a href="shop.html?orden=novedades">Novedades</a>
+    <a href="shop.html?cat=tops">Tops</a>
+    <a href="shop.html?cat=pantalones">Pantalones</a>
+    <a href="shop.html?cat=chaquetas">Chaquetas</a>
+    <a href="shop.html?cat=zapatos">Zapatos</a>
+  </nav>
+  <div class="actions">
+    <button class="icon-btn" aria-label="Buscar"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="m20 20-3.8-3.8"/></svg></button>
+    <a class="icon-btn wl" href="wishlist" aria-label="Favoritos"><svg viewBox="0 0 24 24"><path d="M12 20.5C5 15 2.5 11.5 2.5 8.3 2.5 5.6 4.5 3.8 7 3.8c2 0 4 1.2 5 3 1-1.8 3-3 5-3 2.5 0 4.5 1.8 4.5 4.5 0 3.200-2.500 6.700-9.500 12.200Z"/></svg><span class="badge wl-badge" hidden>0</span></a>
+    <button class="icon-btn menu-btn" id="menuBtn" aria-label="Menú" aria-expanded="false" aria-controls="nav"><svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+    <button class="icon-btn cart" aria-label="Carrito"><svg viewBox="0 0 24 24"><path d="M5 8h14l-1.2 11.2a1.5 1.5 0 0 1-1.500 1.300H7.700a1.500 1.500 0 0 1-1.500-1.300L5 8Z"/><path d="M9 8V6.500a3 3 0 0 1 6 0V8"/></svg><span class="badge" hidden>0</span></button>
+  </div>
+</header>
+
+<main class="ls" id="main">
+  <section class="ls-head">
+    <nav class="crumbs" aria-label="Ruta de navegación"><a href="index.html">Inicio</a><span aria-hidden="true">/</span><span aria-current="page">Carrito</span></nav>
+    <div class="eyebrow"><i></i>Tu pedido</div>
+    <h1 class="ls-title">Tu <em>carrito</em><svg class="ls-spark" viewBox="0 0 40 40" aria-hidden="true"><path d="M20 0c2 13 7 17 20 20-13 3-18 7-20 20-2-13-7-17-20-20C13 17 18 13 20 0Z" fill="#EF4479"/></svg></h1>
+    <p class="ls-sub" id="cCount" aria-live="polite"></p>
+  </section>
+
+  <section class="ls-body cart-layout" id="cartFull" aria-label="Productos del carrito">
+    <ul class="cart-lines" id="cLines"></ul>
+    <aside class="cart-sum" aria-labelledby="sumTitle">
+      <h2 id="sumTitle">Resumen</h2>
+      <div class="cs-row"><span id="sItems"></span><b id="sSub"></b></div>
+      <div class="cs-row muted"><span>Envío</span><span>Se confirma con tu pedido</span></div>
+      <p class="cs-note">Los precios y la disponibilidad son de referencia. Los confirmaremos al procesar tu pedido.</p>
+      <!-- Pedido por WhatsApp: no hay checkout ni pagos en línea -->
+      <button class="btn wa-btn cs-wa-order" type="button" id="waOrder" aria-haspopup="dialog"><span class="wa-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.4 3.6A10.4 10.4 0 0 0 3.3 16.4L2 22l5.8-1.5A10.4 10.4 0 0 0 20.4 3.6Z"/><path d="M8.6 7.8c.3-.6.8-.6 1.1-.6l.8 1.9c0 .4-.5.9-.8 1.3.6 1.1 1.5 2 2.7 2.7.4-.3.9-.8 1.3-.8l1.9.8c0 .3 0 .8-.6 1.1-.8.4-1.9.4-3.3-.3-1.7-.8-3.1-2.2-3.9-3.9-.7-1.4-.6-2.4-.2-3Z"/></svg></span><span>Realizar pedido por WhatsApp</span></button>
+      <p class="cs-block" id="waBlocked" role="alert" hidden></p>
+      <p class="cs-pay-note">Sin pagos en línea: el <b>pago y la entrega se coordinan directamente con Mentarosa</b> por WhatsApp.</p>
+      <p class="wa-status" id="waStatus" hidden></p>
+      <a class="cs-back" href="shop.html">Seguir comprando</a>
+    </aside>
+  </section>
+
+  <section class="ls-body" id="cartEmpty" hidden>
+    <div class="ls-empty">
+      <svg viewBox="0 0 140 130" fill="none" aria-hidden="true"><ellipse cx="70" cy="118" rx="44" ry="7" fill="#B82A58" opacity=".12"/>
+        <path d="M28 44h84l-7 64a8 8 0 0 1-8 7H43a8 8 0 0 1-8-7l-7-64Z" fill="#FFFFFF" stroke="#EF4479" stroke-width="5" stroke-linejoin="round"/>
+        <path d="M50 44V36a20 20 0 0 1 40 0v8" stroke="#EF4479" stroke-width="5" stroke-linecap="round"/>
+        <path d="M70 96c-11-8-15-13-15-18 0-5 4-8 8-8 3 0 6 2 7 5 1-3 4-5 7-5 4 0 8 3 8 8 0 5-4 10-15 18Z" fill="#FBC9D9"/>
+        <path d="M118 14c1 7 4 10 11 11-7 1-10 4-11 11-1-7-4-10-11-11 7-1 10-4 11-11Z" fill="#F7D08A"/></svg>
+      <h2>Tu carrito está esperando <em>algo lindo</em></h2>
+      <p>Aún no agregaste productos. Date una vuelta por la tienda o revisa tus favoritos.</p>
+      <div class="ls-cta"><a class="btn btn-primary" href="shop.html">Explorar la tienda</a><a class="btn btn-secondary" href="wishlist">Ver favoritos</a></div>
+    </div>
+  </section>
+</main>
+
+<!-- ===== RESUMEN DEL PEDIDO (antes de abrir WhatsApp) ===== -->
+<dialog class="od" id="orderDlg" aria-labelledby="odTitle">
+  <div class="od-in">
+    <header class="od-head">
+      <div><p class="od-eyebrow">Resumen de tu pedido</p><h2 id="odTitle">Pedido <em id="odRef"></em></h2></div>
+      <button class="od-x" type="button" id="odClose" aria-label="Cerrar resumen"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+    </header>
+
+    <div class="od-step" id="odReview">
+      <div class="od-body">
+        <ul class="od-items" id="odItems"></ul>
+        <div class="od-total"><span id="odCount"></span><b id="odSub"></b></div>
+        <ul class="od-info">
+          <li><b>Envío</b> Se coordina con Mentarosa</li>
+          <li><b>Pago</b> Se coordina por WhatsApp</li>
+        </ul>
+        <div class="od-fields">
+          <label>Tu nombre <span>(opcional)</span><input id="odName" type="text" maxlength="60" autocomplete="given-name" placeholder="Para saludarte por tu nombre"></label>
+          <label>Comentario <span>(opcional)</span><textarea id="odNote" maxlength="300" rows="2" placeholder="Ej.: prefiero retirar en la tienda"></textarea></label>
+        </div>
+        <details class="od-preview"><summary>Ver el mensaje que se enviará</summary><pre id="odMsg"></pre></details>
+        <p class="od-note">Se abrirá WhatsApp con tu pedido listo para que lo envíes. <b>El pedido no queda confirmado hasta que Mentarosa te responda</b>, y tu carrito se mantiene mientras tanto.</p>
+        <p class="od-fallback" id="odFallback" hidden>El chat se abrirá sin el mensaje escrito: copiaremos tu pedido para que solo tengas que <b>pegarlo</b> y enviarlo.</p>
+      </div>
+      <footer class="od-foot">
+        <button class="btn btn-secondary" type="button" id="odBack">Volver al carrito</button>
+        <button class="btn wa-btn" type="button" id="odSend"><span class="wa-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.4 3.6A10.4 10.4 0 0 0 3.3 16.4L2 22l5.8-1.5A10.4 10.4 0 0 0 20.4 3.6Z"/><path d="M8.6 7.8c.3-.6.8-.6 1.1-.6l.8 1.9c0 .4-.5.9-.8 1.3.6 1.1 1.5 2 2.7 2.7.4-.3.9-.8 1.3-.8l1.9.8c0 .3 0 .8-.6 1.1-.8.4-1.9.4-3.3-.3-1.7-.8-3.1-2.2-3.9-3.9-.7-1.4-.6-2.4-.2-3Z"/></svg></span><span>Abrir WhatsApp</span></button>
+      </footer>
+    </div>
+
+    <div class="od-step od-done" id="odDone" hidden>
+      <svg viewBox="0 0 120 110" fill="none" aria-hidden="true">
+        <path d="M100 18A46 46 0 0 0 24 76l-6 24 25-6A46 46 0 0 0 100 18Z" fill="#FFFFFF" stroke="#EF4479" stroke-width="5" stroke-linejoin="round"/>
+        <path d="M60 72c-11-8-15-13-15-18 0-5 4-8 8-8 3 0 6 2 7 5 1-3 4-5 7-5 4 0 8 3 8 8 0 5-4 10-15 18Z" fill="#FBC9D9"/>
+        <path d="M104 4c1 6 3 8 9 9-6 1-8 3-9 9-1-6-3-8-9-9 6-1 8-3 9-9Z" fill="#F7D08A"/></svg>
+      <h3 id="odDoneTitle">Tu pedido está listo en <em>WhatsApp</em></h3>
+      <p id="odDoneText"></p>
+      <ul class="od-next">
+        <li>Envía el mensaje en el chat de Mentarosa.</li>
+        <li>Mentarosa te confirmará disponibilidad, pago y entrega.</li>
+        <li>Tu carrito se mantiene por si quieres revisarlo.</li>
+      </ul>
+      <div class="od-foot od-foot-done">
+        <button class="btn btn-secondary" type="button" id="odCopy">Copiar pedido</button>
+        <button class="btn wa-btn" type="button" id="odReopen"><span class="wa-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.4 3.6A10.4 10.4 0 0 0 3.3 16.4L2 22l5.8-1.5A10.4 10.4 0 0 0 20.4 3.6Z"/><path d="M8.6 7.8c.3-.6.8-.6 1.1-.6l.8 1.9c0 .4-.5.9-.8 1.3.6 1.1 1.5 2 2.7 2.7.4-.3.9-.8 1.3-.8l1.9.8c0 .3 0 .8-.6 1.1-.8.4-1.9.4-3.3-.3-1.7-.8-3.1-2.2-3.9-3.9-.7-1.4-.6-2.4-.2-3Z"/></svg></span><span>Abrir WhatsApp otra vez</span></button>
+      </div>
+      <button class="od-link" type="button" id="odFinish">Volver al carrito</button>
+    </div>
+  </div>
+</dialog>
+
+<!-- ===== FOOTER ===== -->
+<footer class="foot" id="contacto">
+  <div class="foot-wrap">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <a class="logo" href="index.html" aria-label="Mentarosa Boutique, ir al inicio"><img src="assets/logo-mentarosa.png" alt="" width="76" height="76"><span><b>Mentarosa</b><small>Boutique</small></span></a>
+        <p>Calzado, ropa, accesorios y jeans con un toque rosa que te representa.</p>
+        <div class="social">
+          <a href="https://www.instagram.com/mentarosa.sc/" target="_blank" rel="noopener noreferrer" aria-label="Instagram de Mentarosa (@mentarosa.sc)"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5.5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.2" cy="6.8" r="1" fill="currentColor" stroke="none"/></svg></a>
+          <a href="https://wa.me/message/2PVRC4MJKY7KF1" target="_blank" rel="noopener noreferrer" aria-label="Escríbenos por WhatsApp"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.4 3.6A10.4 10.4 0 0 0 3.3 16.4L2 22l5.8-1.5A10.4 10.4 0 0 0 20.4 3.6Z"/><path d="M8.6 7.8c.3-.6.8-.6 1.1-.6l.8 1.9c0 .4-.5.9-.8 1.3.6 1.1 1.5 2 2.7 2.7.4-.3.9-.8 1.300-.8l1.900.8c0 .3 0 .8-.6 1.100-.8.4-1.900.4-3.300-.3-1.700-.8-3.100-2.200-3.900-3.900-.7-1.400-.6-2.400-.2-3Z"/></svg></a>
+        </div>
+      </div>
+      <nav aria-label="Comprar">
+        <h3>Comprar</h3>
+        <ul>
+          <li><a href="shop.html?orden=novedades">Novedades</a></li>
+          <li><a href="shop.html?cat=tops">Tops</a></li>
+          <li><a href="shop.html?cat=pantalones">Pantalones</a></li>
+          <li><a href="shop.html?cat=chaquetas">Chaquetas</a></li>
+          <li><a href="shop.html?cat=zapatos">Zapatos</a></li>
+        </ul>
+      </nav>
+      <nav aria-label="Ayuda">
+        <h3>Ayuda</h3>
+        <ul>
+          <li><a href="https://wa.me/message/2PVRC4MJKY7KF1" target="_blank" rel="noopener noreferrer">Compra por WhatsApp</a></li>
+          <li><a href="#" data-placeholder="Guía de tallas">Guía de tallas</a></li>
+          <li><a href="#" data-placeholder="Envíos">Envíos</a></li>
+          <li><a href="#" data-placeholder="Preguntas frecuentes">Preguntas frecuentes</a></li>
+        </ul>
+      </nav>
+      <nav aria-label="Sobre Mentarosa">
+        <h3>Sobre Mentarosa</h3>
+        <ul>
+          <li><a href="#" data-placeholder="Nuestra historia">Nuestra historia</a></li>
+          <li><a href="#contacto-tienda">Visítanos</a></li>
+          <li><a href="https://www.instagram.com/mentarosa.sc/" target="_blank" rel="noopener noreferrer">Instagram</a></li>
+        </ul>
+      </nav>
+      <div class="foot-contact" id="contacto-tienda">
+        <h3>Contacto</h3>
+        <address>
+          <span><span class="k">Tienda</span>CC Galerías Innamar, local 20<br>Barrio Obrero, San Cristóbal<br>Estado Táchira, Venezuela</span>
+          <span><span class="k">WhatsApp</span><a href="https://wa.me/message/2PVRC4MJKY7KF1" target="_blank" rel="noopener noreferrer">Escríbenos aquí</a></span>
+          <span><span class="k">Instagram</span><a href="https://www.instagram.com/mentarosa.sc/" target="_blank" rel="noopener noreferrer">@mentarosa.sc</a></span>
+          <!-- PLACEHOLDER: añadir correo y teléfono oficiales cuando estén disponibles -->
+          <span class="todo"><span class="k">Correo · Teléfono</span>Por confirmar</span>
+        </address>
+      </div>
+    </div>
+    <div class="foot-legal">
+      <ul aria-label="Políticas">
+        <li><a href="#" data-placeholder="Política de privacidad">Privacidad</a></li>
+        <li><a href="#" data-placeholder="Cambios y devoluciones">Cambios y devoluciones</a></li>
+        <li><a href="#" data-placeholder="Términos y condiciones">Términos y condiciones</a></li>
+      </ul>
+      <a class="to-top" href="#" id="toTop">Volver arriba <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M6 11l6-6 6 6"/></svg></a>
+    </div>
+    <p class="foot-copy">© <span id="year">2026</span> Mentarosa Boutique · RIF V-27422158-1 · Todos los derechos reservados.</p>
+  </div>
+  <div class="foot-mark" aria-hidden="true">
+    <svg viewBox="0 0 1344 250" preserveAspectRatio="xMidYMax meet"><text x="0" y="236" font-size="272" textLength="1344" lengthAdjust="spacingAndGlyphs">MENTAROSA</text></svg>
+  </div>
+</footer>
+<script src="assets/js/catalog.js"></script>
+<script src="assets/js/store.js"></script>
+<script src="assets/js/site.js"></script>
+<script src="assets/js/cart-ui.js"></script>
+<script src="assets/js/order.js"></script>
+<script src="assets/js/cart-page.js"></script>
+</body>
+</html>

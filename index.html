@@ -1,0 +1,432 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mentarosa Boutique · Header + Hero</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=DM+Serif+Display:ital@1&family=Fredoka:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="icon" type="image/png" href="assets/logo-mentarosa-circle.png">
+<link rel="stylesheet" href="assets/css/site.css">
+<script src="assets/js/transition.js"></script>
+</head>
+<body>
+
+<!-- ===== HEADER ===== -->
+<header class="header">
+  <a class="brand" href="index.html" aria-label="Mentarosa Boutique">
+    <img src="assets/logo-mentarosa.png" alt="Mentarosa Boutique">
+  </a>
+  <nav class="nav" id="nav" aria-label="Principal">
+    <a class="active" href="index.html" aria-current="page">Inicio</a>
+    <a href="shop.html?orden=novedades">Novedades</a>
+    <a href="shop.html?cat=tops">Tops</a>
+    <a href="shop.html?cat=pantalones">Pantalones</a>
+    <a href="shop.html?cat=chaquetas">Chaquetas</a>
+    <a href="shop.html?cat=zapatos">Zapatos</a>
+  </nav>
+  <div class="actions">
+    <button class="icon-btn" aria-label="Buscar"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="m20 20-3.8-3.8"/></svg></button>
+    <a class="icon-btn wl" href="wishlist" aria-label="Favoritos"><svg viewBox="0 0 24 24"><path d="M12 20.5C5 15 2.5 11.5 2.5 8.3 2.5 5.6 4.5 3.8 7 3.8c2 0 4 1.2 5 3 1-1.8 3-3 5-3 2.5 0 4.5 1.8 4.5 4.5 0 3.200-2.500 6.700-9.500 12.200Z"/></svg><span class="badge wl-badge" hidden>0</span></a>
+    <button class="icon-btn menu-btn" id="menuBtn" aria-label="Menú" aria-expanded="false" aria-controls="nav"><svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+    <button class="icon-btn cart" aria-label="Carrito"><svg viewBox="0 0 24 24"><path d="M5 8h14l-1.2 11.2a1.5 1.5 0 0 1-1.500 1.300H7.700a1.500 1.500 0 0 1-1.500-1.300L5 8Z"/><path d="M9 8V6.500a3 3 0 0 1 6 0V8"/></svg><span class="badge" hidden>0</span></button>
+  </div>
+</header>
+
+<!-- ===== HERO ===== -->
+<section class="hero" id="hero">
+  <div class="stage" id="stage">
+    <div class="bg"></div>
+    <div class="blob a"></div><div class="blob b"></div><div class="blob c"></div>
+
+    <svg class="wordmark" viewBox="0 0 1344 270" aria-hidden="true">
+      <text x="0" y="232" font-size="268" textLength="1344" lengthAdjust="spacingAndGlyphs">MENTAROSA</text>
+    </svg>
+
+    <!-- decoración -->
+    <div class="deco" style="left:1366px;top:196px"><svg width="78" height="96" viewBox="0 0 78 96"><path d="M46 4c3 20 9 26 28 30-19 4-25 10-28 30-3-20-9-26-28-30 19-4 25-10 28-30Z" fill="none" stroke="#EF4479" stroke-width="3.5" stroke-linejoin="round"/><path d="M16 62c2 11 5 14 16 16-11 2-14 5-16 16-2-11-5-14-16-16 11-2 14-5 16-16Z" fill="#EF4479"/></svg></div>
+    <div class="deco" style="left:330px;top:536px"><svg width="150" height="120" viewBox="0 0 150 120" fill="none" stroke="#EF4479" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M18 40c-8-9 4-20 11-11 5-9 19 2 11 11l-11 12-11-12Z" transform="rotate(-14 28 40)"/><path d="M74 14c-6-7 3-15 8-8 4-7 14 1 8 8l-8 9-8-9Z" transform="rotate(10 82 14)"/><path d="M104 62c-6-7 3-15 8-8 4-7 14 1 8 8l-8 9-8-9Z" transform="rotate(-8 112 62)"/><path d="M38 96c-6-7 3-15 8-8 4-7 14 1 8 8l-8 9-8-9Z" transform="rotate(16 46 96)"/></svg></div>
+    <div class="deco" style="left:1084px;top:236px"><svg width="84" height="64" viewBox="0 0 84 64" fill="none" stroke="#EF4479" stroke-width="3.5" stroke-linecap="round"><path d="M6 58 26 36M30 30 40 6M52 30 70 14M60 46l20-4"/></svg></div>
+    <div class="deco" style="left:1370px;top:800px"><svg width="44" height="44" viewBox="0 0 64 64"><circle cx="32" cy="32" r="32" fill="#F7D08A"/><circle cx="32" cy="32" r="18" fill="#FDE6EE"/></svg></div>
+    <div class="deco" style="left:600px;top:70px;opacity:.9"><svg width="40" height="40" viewBox="0 0 40 40"><path d="M20 0c2 13 7 17 20 20-13 3-18 7-20 20-2-13-7-17-20-20C13 17 18 13 20 0Z" fill="#F7D08A"/></svg></div>
+    <div class="deco" style="left:1320px;top:70px"><svg width="34" height="34" viewBox="0 0 24 24" fill="#FBC9D9"><path d="M12 20.500C5 15 2.500 11.500 2.500 8.300 2.500 5.600 4.500 3.800 7 3.800c2 0 4 1.200 5 3 1-1.800 3-3 5-3 2.500 0 4.500 1.800 4.500 4.500 0 3.200-2.500 6.700-9.500 12.200Z"/></svg></div>
+    <svg class="deco" style="left:60px;top:600px" width="120" height="14" viewBox="0 0 120 14" fill="none" stroke="#F7D08A" stroke-width="4" stroke-linecap="round"><path d="M3 7c10-8 17 8 27 0s17 8 27 0 17 8 27 0 17 8 30 0"/></svg>
+
+    <!-- zapato -->
+    <div class="carousel" id="carousel" role="region" aria-roledescription="carrusel" aria-label="Productos destacados">
+      <article class="slide" data-pos="0" data-cat="Tenis" data-name="Cacao &amp; crema" data-id="p1">
+        <div class="pcard">
+          <div class="pimg" style="--g:linear-gradient(135deg,var(--rosa-pastel),var(--durazno-pastel))">
+            <span class="ptag">Favorito</span><button class="fav" aria-label="Guardar en favoritos"><svg viewBox="0 0 24 24"><path d="M12 20.5C5 15 2.5 11.5 2.5 8.3 2.5 5.6 4.5 3.8 7 3.8c2 0 4 1.2 5 3 1-1.8 3-3 5-3 2.5 0 4.5 1.8 4.5 4.5 0 3.2-2.5 6.7-9.5 12.2Z"/></svg></button>
+            <img src="assets/zapatos-nike.png" alt="Tenis cacao y crema" width="1110" height="810" fetchpriority="high">
+          </div>
+          <div class="pinfo"><small>Tenis</small><h3>Cacao &amp; crema</h3>
+            <div class="prow"><span class="price ask">Consultar precio</span><button class="add" aria-label="Agregar Cacao &amp; crema al carrito"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></button></div></div>
+        </div>
+      </article>
+      <article class="slide" data-pos="1" data-cat="Tenis" data-name="Samba leopardo" data-id="p2">
+        <div class="pcard">
+          <div class="pimg" style="--g:linear-gradient(135deg,var(--dorado-pastel),var(--rosa-rubor))">
+            <span class="ptag">Nuevo</span><button class="fav" aria-label="Guardar en favoritos"><svg viewBox="0 0 24 24"><path d="M12 20.5C5 15 2.5 11.5 2.5 8.3 2.5 5.6 4.5 3.8 7 3.8c2 0 4 1.2 5 3 1-1.8 3-3 5-3 2.5 0 4.5 1.8 4.5 4.5 0 3.2-2.5 6.7-9.5 12.2Z"/></svg></button>
+            <img src="assets/tenis-samba.png" alt="Tenis Samba leopardo" width="800" height="590" loading="lazy">
+          </div>
+          <div class="pinfo"><small>Tenis</small><h3>Samba leopardo</h3>
+            <div class="prow"><span class="price">75.000 pesos</span><button class="add" aria-label="Agregar Samba leopardo al carrito"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></button></div></div>
+        </div>
+      </article>
+      <article class="slide" data-pos="-1" data-cat="Tacones" data-name="Slingback rosa" data-id="p3">
+        <div class="pcard">
+          <div class="pimg" style="--g:linear-gradient(135deg,var(--orquidea-pastel),var(--rosa-pastel))">
+            <button class="fav" aria-label="Guardar en favoritos"><svg viewBox="0 0 24 24"><path d="M12 20.5C5 15 2.5 11.5 2.5 8.3 2.5 5.6 4.5 3.8 7 3.8c2 0 4 1.2 5 3 1-1.8 3-3 5-3 2.5 0 4.5 1.8 4.5 4.5 0 3.2-2.5 6.7-9.5 12.2Z"/></svg></button>
+            <img src="assets/tacon-rosa.png" alt="Tacón slingback rosa" width="560" height="410" loading="lazy">
+          </div>
+          <div class="pinfo"><small>Tacones</small><h3>Slingback rosa</h3>
+            <div class="prow"><span class="price ask">Consultar precio</span><button class="add" aria-label="Agregar Slingback rosa al carrito"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></button></div></div>
+        </div>
+      </article>
+    </div>
+    <div class="c-controls">
+      <button class="c-btn" id="prev" aria-label="Producto anterior"><svg viewBox="0 0 24 24"><path d="M19 12H5M11 6l-6 6 6 6"/></svg></button>
+      <div class="c-dots" id="dots" aria-live="polite"></div>
+      <button class="c-btn" id="next" aria-label="Producto siguiente"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+    </div>
+
+    <!-- titular + CTAs -->
+    <div class="copy">
+      <div class="eyebrow"><i></i>Colección 2026 · San Cristóbal</div>
+      <h1>Pisa suave,<em>luce dulce.</em></h1>
+      <p>Calzado, ropa y accesorios con ese toque rosa que te representa. Descubre las novedades de la semana.</p>
+      <div class="cta">
+        <a class="btn btn-primary" href="shop.html">Comprar ahora</a>
+        <a class="btn btn-secondary" href="shop.html?orden=novedades">Ver novedades</a>
+      </div>
+      <div class="perks"><span class="chip">Compra por WhatsApp</span><span class="chip gold">Calzado · Ropa · Jeans</span></div>
+    </div>
+
+    <!-- tarjeta flotante -->
+  </div>
+</section>
+
+
+
+<!-- ===== SHOP BY CATEGORY ===== -->
+<section class="cats" id="categorias" aria-labelledby="cats-title">
+  <div class="cats-wrap">
+    <div class="cats-head">
+      <div>
+        <div class="eyebrow reveal"><i></i>Categorías</div>
+        <h2 class="cats-title reveal" id="cats-title">Encuentra tu <em>estilo</em>
+          <svg class="wave" viewBox="0 0 240 14" fill="none" stroke="#F7D08A" stroke-width="5" stroke-linecap="round" aria-hidden="true"><path d="M3 7c14-9 24 9 38 0s24 9 38 0 24 9 38 0 24 9 38 0 24 9 38 0 24 9 36 0"/></svg>
+          <svg class="spark" viewBox="0 0 40 40" aria-hidden="true"><path d="M20 0c2 13 7 17 20 20-13 3-18 7-20 20-2-13-7-17-20-20C13 17 18 13 20 0Z" fill="#EF4479"/></svg>
+        </h2>
+      </div>
+      <div class="cats-side reveal">
+        <p>Cuatro mundos para armar tu look: desde básicos dulces hasta el par perfecto para cada día.</p>
+        <a class="btn btn-secondary" href="shop.html">Ver toda la tienda</a>
+      </div>
+    </div>
+    <div class="cat-grid">
+    <a class="cat cat-tops reveal" href="shop.html?cat=tops" aria-label="Explorar Tops">
+      <div class="cat-media">
+        <div class="ph"><svg viewBox="0 0 48 48"><rect x="6" y="9" width="36" height="30" rx="6"/><circle cx="17" cy="20" r="3.5"/><path d="m8 36 11-10 8 7 6-5 9 8"/></svg><b>Tops</b><span>Reemplaza con<br>assets/categorias/tops.jpg</span></div>
+        <img class="photo" src="assets/categorias/tops.jpg" alt="Tops: moda femenina" loading="lazy" onerror="this.closest('.cat').classList.add('noimg');this.remove()" onload="this.closest('.cat').classList.add('hasimg')">
+      </div>
+      <span class="cat-deco" style="right:26px;top:70px"><svg width="46" height="56" viewBox="0 0 40 48"><path d="M20 2c2 12 6 16 18 18-12 2-16 6-18 18-2-12-6-16-18-18C14 18 18 14 20 2Z" fill="#F7D08A"/><path d="M34 34c1 5 3 7 8 8-5 1-7 3-8 8-1-5-3-7-8-8 5-1 7-3 8-8Z" fill="#EF4479"/></svg></span>
+      <span class="cat-num">01</span>
+      <div class="cat-foot"><span class="cat-name">Tops</span><span class="cat-go"><svg viewBox="0 0 24 24"><path d="M7 17 17 7M8 7h9v9"/></svg></span></div>
+    </a>
+    <a class="cat cat-pantalones reveal" href="shop.html?cat=pantalones" aria-label="Explorar Pantalones">
+      <div class="cat-media">
+        <div class="ph"><svg viewBox="0 0 48 48"><rect x="6" y="9" width="36" height="30" rx="6"/><circle cx="17" cy="20" r="3.5"/><path d="m8 36 11-10 8 7 6-5 9 8"/></svg><b>Pantalones</b><span>Reemplaza con<br>assets/categorias/pantalones.jpg</span></div>
+        <img class="photo" src="assets/categorias/pantalones.jpg" alt="Pantalones: moda femenina" loading="lazy" onerror="this.closest('.cat').classList.add('noimg');this.remove()" onload="this.closest('.cat').classList.add('hasimg')">
+      </div>
+      <span class="cat-deco" style="right:30px;top:24px"><svg width="96" height="70" viewBox="0 0 96 70" fill="none" stroke="#EF4479" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M18 36c-8-9 4-20 11-11 5-9 19 2 11 11l-11 12-11-12Z" transform="rotate(-14 28 36)"/><path d="M72 18c-6-7 3-15 8-8 4-7 14 1 8 8l-8 9-8-9Z" transform="rotate(10 80 18)"/></svg></span>
+      <span class="cat-num">02</span>
+      <div class="cat-foot"><span class="cat-name">Pantalones</span><span class="cat-go"><svg viewBox="0 0 24 24"><path d="M7 17 17 7M8 7h9v9"/></svg></span></div>
+    </a>
+    <a class="cat cat-chaquetas reveal" href="shop.html?cat=chaquetas" aria-label="Explorar Chaquetas">
+      <div class="cat-media">
+        <div class="ph"><svg viewBox="0 0 48 48"><rect x="6" y="9" width="36" height="30" rx="6"/><circle cx="17" cy="20" r="3.5"/><path d="m8 36 11-10 8 7 6-5 9 8"/></svg><b>Chaquetas</b><span>Reemplaza con<br>assets/categorias/chaquetas.jpg</span></div>
+        <img class="photo" src="assets/categorias/chaquetas.jpg" alt="Chaquetas: moda femenina" loading="lazy" onerror="this.closest('.cat').classList.add('noimg');this.remove()" onload="this.closest('.cat').classList.add('hasimg')">
+      </div>
+      <span class="cat-deco" style="right:22px;top:64px"><svg width="64" height="64" viewBox="0 0 64 64"><circle cx="32" cy="32" r="30" fill="none" stroke="#EF4479" stroke-width="3" stroke-dasharray="3 7" stroke-linecap="round"/><circle cx="32" cy="32" r="12" fill="#F7D08A"/></svg></span>
+      <span class="cat-num">03</span>
+      <div class="cat-foot"><span class="cat-name">Chaquetas</span><span class="cat-go"><svg viewBox="0 0 24 24"><path d="M7 17 17 7M8 7h9v9"/></svg></span></div>
+    </a>
+    <a class="cat cat-zapatos reveal" href="shop.html?cat=zapatos" aria-label="Explorar Zapatos">
+      <div class="cat-media">
+        <img class="cutout" src="assets/zapatos-nike.png" alt="Zapatos: tenis cacao y crema" loading="lazy" width="1110" height="810">
+      </div>
+      <span class="cat-sticker"><span><small>Nuevo</small>ingreso</span></span>
+      <span class="cat-num">04</span>
+      <div class="cat-foot"><span class="cat-name">Zapatos</span><span class="cat-go"><svg viewBox="0 0 24 24"><path d="M7 17 17 7M8 7h9v9"/></svg></span></div>
+    </a>
+    </div>
+  </div>
+</section>
+
+
+<!-- ===== NEW ARRIVALS ===== -->
+<section class="new" id="nuevos" aria-labelledby="new-title">
+  <div class="new-wrap">
+    <div class="new-head">
+      <div>
+        <div class="eyebrow reveal"><i></i>Nuevos ingresos</div>
+        <h2 class="new-title reveal" id="new-title">Recién <em>llegados</em>
+          <svg class="spark" viewBox="0 0 40 40" aria-hidden="true"><path d="M20 0c2 13 7 17 20 20-13 3-18 7-20 20-2-13-7-17-20-20C13 17 18 13 20 0Z" fill="#F7D08A"/></svg>
+        </h2>
+      </div>
+      <p class="new-note reveal">Piezas elegidas esta semana para estrenar: suaves, frescas y con ese toque rosa que te queda tan bien.
+        <small>Actualizamos la selección cada semana.</small></p>
+    </div>
+    <div class="p-grid" id="productGrid" tabindex="0" role="region" aria-roledescription="carrusel" aria-label="Productos recién llegados"></div>
+    <div class="p-controls">
+      <div class="p-progress" aria-hidden="true"><i id="pBar"></i></div>
+      <div class="p-arrows">
+        <button class="c-btn" id="pPrev" type="button" aria-label="Productos anteriores"><svg viewBox="0 0 24 24"><path d="M19 12H5M11 6l-6 6 6 6"/></svg></button>
+        <button class="c-btn" id="pNext" type="button" aria-label="Productos siguientes"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+      </div>
+    </div>
+    <div class="new-foot reveal">
+      <a class="btn btn-primary" href="shop.html">Ver todos los productos</a>
+      <p>Compra por WhatsApp · Calzado, ropa y accesorios</p>
+    </div>
+  </div>
+</section>
+
+
+<!-- ===== EDITORIAL FASHION CAMPAIGN ===== -->
+<section class="camp" id="campana" aria-labelledby="camp-title">
+  <div class="camp-wrap">
+    <div class="camp-grid">
+      <!-- Foto A · vertical (reemplaza assets/campana/campana-1.jpg · proporción ~ 4:5) -->
+      <figure class="cp cp-a reveal rv-img">
+        <div class="cp-ph"><svg viewBox="0 0 48 48"><rect x="6" y="9" width="36" height="30" rx="6"/><circle cx="17" cy="20" r="3.5"/><path d="m8 36 11-10 8 7 6-5 9 8"/></svg><b>Foto de campaña 1</b><span>assets/campana/campana-1.jpg<br>vertical · 4:5</span></div>
+        <img src="assets/campana/campana-1.jpg" alt="Modelo con prendas de la colección Mentarosa" loading="lazy" onerror="this.closest('.cp').classList.add('noimg');this.remove()">
+        <figcaption class="cp-tag"><i></i>Look 01</figcaption>
+      </figure>
+
+      <h2 class="camp-title reveal" id="camp-title">
+        <span class="line"><span>Tu estilo,</span></span>
+        <span class="line l2"><span><em>tus reglas.<svg class="wave" viewBox="0 0 300 14" preserveAspectRatio="none" fill="none" stroke="#F7D08A" stroke-width="5" stroke-linecap="round" aria-hidden="true"><path d="M3 7c16-9 28 9 44 0s28 9 44 0 28 9 44 0 28 9 44 0 28 9 44 0 28 9 44 0 28 9 36 0"/></svg></em></span></span>
+      </h2>
+
+      <div class="camp-copy">
+        <div class="eyebrow reveal"><i></i>Campaña editorial</div>
+        <p class="reveal">Moda que no pide permiso.</p>
+        <p class="reveal">Elige lo que te hace sentir tú: colores que hablan, prendas que te acompañan y una forma de vestir que solo tú sabes llevar.</p>
+        <div class="camp-cta reveal"><a class="btn btn-primary" href="shop.html">Explorar colección <span class="arr"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a></div>
+      </div>
+
+      <!-- Foto B · horizontal (reemplaza assets/campana/campana-2.jpg · proporción ~ 5:4) -->
+      <figure class="cp cp-b reveal rv-img">
+        <div class="cp-ph"><svg viewBox="0 0 48 48"><rect x="6" y="9" width="36" height="30" rx="6"/><circle cx="17" cy="20" r="3.5"/><path d="m8 36 11-10 8 7 6-5 9 8"/></svg><b>Foto de campaña 2</b><span>assets/campana/campana-2.jpg<br>horizontal · 5:4</span></div>
+        <img src="assets/campana/campana-2.jpg" alt="Detalle de moda femenina Mentarosa" loading="lazy" onerror="this.closest('.cp').classList.add('noimg');this.remove()">
+        <figcaption class="cp-tag"><i></i>Look 02</figcaption>
+      </figure>
+
+      <span class="camp-sticker" aria-hidden="true"><span><small>Edición</small>Mentarosa</span></span>
+      <span class="camp-deco" style="left:63%;top:1%"><svg width="52" height="62" viewBox="0 0 40 48"><path d="M20 2c2 12 6 16 18 18-12 2-16 6-18 18-2-12-6-16-18-18C14 18 18 14 20 2Z" fill="#EF4479"/><path d="M34 34c1 5 3 7 8 8-5 1-7 3-8 8-1-5-3-7-8-8 5-1 7-3 8-8Z" fill="#F7D08A"/></svg></span>
+      <span class="camp-deco" style="right:5%;top:30%"><svg width="96" height="70" viewBox="0 0 96 70" fill="none" stroke="#EF4479" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M18 36c-8-9 4-20 11-11 5-9 19 2 11 11l-11 12-11-12Z" transform="rotate(-14 28 36)"/><path d="M72 18c-6-7 3-15 8-8 4-7 14 1 8 8l-8 9-8-9Z" transform="rotate(10 80 18)"/></svg></span>
+      <span class="camp-deco" style="left:46%;bottom:4%"><svg width="64" height="64" viewBox="0 0 64 64"><circle cx="32" cy="32" r="30" fill="none" stroke="#EF4479" stroke-width="3" stroke-dasharray="3 7" stroke-linecap="round"/><circle cx="32" cy="32" r="12" fill="#F7D08A"/></svg></span>
+    </div>
+  </div>
+</section>
+
+
+<!-- ===== NEWSLETTER ===== -->
+<section class="nl" id="newsletter" aria-labelledby="nl-title">
+  <div class="nl-panel reveal">
+    <div>
+      <div class="eyebrow"><i></i>Newsletter</div>
+      <h2 id="nl-title">Un poquito de <em>Mentarosa</em> en tu inbox<svg class="heart" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20.5C5 15 2.5 11.5 2.5 8.3 2.5 5.6 4.5 3.8 7 3.8c2 0 4 1.2 5 3 1-1.8 3-3 5-3 2.5 0 4.5 1.8 4.5 4.5 0 3.2-2.5 6.7-9.5 12.2Z"/></svg></h2>
+      <p class="nl-text">Entérate primero de las novedades, las tendencias de la temporada y las nuevas colecciones. Cero spam, solo cosas bonitas.</p>
+      <form class="nl-form" id="nlForm" novalidate>
+        <div class="nl-field">
+          <label class="visually-hidden" for="nlEmail" style="position:absolute;left:-9999px">Correo electrónico</label>
+          <input type="email" id="nlEmail" name="email" placeholder="tucorreo@ejemplo.com" autocomplete="email" inputmode="email" required aria-describedby="nlMsg">
+          <button class="btn btn-primary" type="submit">Suscribirme</button>
+        </div>
+        <input class="nl-hp" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
+        <label class="nl-consent"><input type="checkbox" id="nlConsent" name="consent" required><span>Acepto recibir correos de Mentarosa Boutique. Puedo darme de baja cuando quiera. <a href="#" data-placeholder="Política de privacidad">Política de privacidad</a></span></label>
+        <div class="nl-msg" id="nlMsg" role="status" aria-live="polite"></div>
+      </form>
+    </div>
+    <div class="nl-art" aria-hidden="true">
+      <svg viewBox="0 0 400 320" fill="none">
+        <ellipse cx="200" cy="288" rx="130" ry="14" fill="#B82A58" opacity=".14"/>
+        <rect x="40" y="96" width="320" height="188" rx="28" fill="#EF4479"/>
+        <path d="M40 124c0-15 12-28 28-28h264c16 0 28 13 28 28L214 218c-8 5-20 5-28 0L40 124Z" fill="#FFFFFF"/>
+        <path d="M40 124 186 218c8 5 20 5 28 0l146-94" stroke="#FBC9D9" stroke-width="3" stroke-linecap="round"/>
+        <path d="M40 270 156 190M360 270 244 190" stroke="#B82A58" stroke-width="3" stroke-linecap="round" opacity=".5"/>
+        <circle cx="200" cy="196" r="30" fill="#F7D08A"/>
+        <path d="M200 214c-14-10-19-16-19-23 0-6 4-10 9-10 4 0 8 3 10 7 2-4 6-7 10-7 5 0 9 4 9 10 0 7-5 13-19 23Z" fill="#EF4479"/>
+        <path d="M82 70c2 12 6 16 18 18-12 2-16 6-18 18-2-12-6-16-18-18 12-2 16-6 18-18Z" fill="#F7D08A"/>
+        <path d="M334 38c1 8 4 11 12 12-8 1-11 4-12 12-1-8-4-11-12-12 8-1 11-4 12-12Z" fill="#EF4479"/>
+        <circle cx="318" cy="92" r="9" stroke="#EF4479" stroke-width="3" stroke-dasharray="2 5" stroke-linecap="round"/>
+      </svg>
+      <span class="nl-float f1"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#EF4479" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20.5C5 15 2.5 11.5 2.5 8.3 2.5 5.6 4.5 3.8 7 3.8c2 0 4 1.2 5 3 1-1.8 3-3 5-3 2.5 0 4.5 1.8 4.5 4.5 0 3.2-2.5 6.7-9.5 12.2Z"/></svg></span>
+      <span class="nl-float f2"><svg width="30" height="30" viewBox="0 0 24 24" fill="#FBC9D9"><path d="M12 20.5C5 15 2.5 11.5 2.5 8.3 2.5 5.6 4.5 3.8 7 3.8c2 0 4 1.2 5 3 1-1.8 3-3 5-3 2.5 0 4.5 1.8 4.5 4.5 0 3.2-2.5 6.7-9.5 12.2Z"/></svg></span>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer class="foot" id="contacto">
+  <div class="foot-wrap">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <a class="logo" href="index.html" aria-label="Mentarosa Boutique, ir al inicio"><img src="assets/logo-mentarosa.png" alt="" width="76" height="76"><span><b>Mentarosa</b><small>Boutique</small></span></a>
+        <p>Calzado, ropa, accesorios y jeans con un toque rosa que te representa.</p>
+        <div class="social">
+          <a href="https://www.instagram.com/mentarosa.sc/" target="_blank" rel="noopener noreferrer" aria-label="Instagram de Mentarosa (@mentarosa.sc)"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5.5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.2" cy="6.8" r="1" fill="currentColor" stroke="none"/></svg></a>
+          <a href="https://wa.me/message/2PVRC4MJKY7KF1" target="_blank" rel="noopener noreferrer" aria-label="Escríbenos por WhatsApp"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.4 3.6A10.4 10.4 0 0 0 3.3 16.4L2 22l5.8-1.5A10.4 10.4 0 0 0 20.4 3.6Z"/><path d="M8.6 7.8c.3-.6.8-.6 1.1-.6l.8 1.9c0 .4-.5.9-.8 1.3.6 1.1 1.5 2 2.7 2.7.4-.3.9-.8 1.300-.8l1.900.8c0 .3 0 .8-.6 1.100-.8.4-1.900.4-3.300-.3-1.700-.8-3.100-2.200-3.900-3.900-.7-1.400-.6-2.400-.2-3Z"/></svg></a>
+        </div>
+      </div>
+      <nav aria-label="Comprar">
+        <h3>Comprar</h3>
+        <ul>
+          <li><a href="shop.html?orden=novedades">Novedades</a></li>
+          <li><a href="shop.html?cat=tops">Tops</a></li>
+          <li><a href="shop.html?cat=pantalones">Pantalones</a></li>
+          <li><a href="shop.html?cat=chaquetas">Chaquetas</a></li>
+          <li><a href="shop.html?cat=zapatos">Zapatos</a></li>
+        </ul>
+      </nav>
+      <nav aria-label="Ayuda">
+        <h3>Ayuda</h3>
+        <ul>
+          <li><a href="https://wa.me/message/2PVRC4MJKY7KF1" target="_blank" rel="noopener noreferrer">Compra por WhatsApp</a></li>
+          <li><a href="#" data-placeholder="Guía de tallas">Guía de tallas</a></li>
+          <li><a href="#" data-placeholder="Envíos">Envíos</a></li>
+          <li><a href="#" data-placeholder="Preguntas frecuentes">Preguntas frecuentes</a></li>
+        </ul>
+      </nav>
+      <nav aria-label="Sobre Mentarosa">
+        <h3>Sobre Mentarosa</h3>
+        <ul>
+          <li><a href="#" data-placeholder="Nuestra historia">Nuestra historia</a></li>
+          <li><a href="#contacto-tienda">Visítanos</a></li>
+          <li><a href="https://www.instagram.com/mentarosa.sc/" target="_blank" rel="noopener noreferrer">Instagram</a></li>
+        </ul>
+      </nav>
+      <div class="foot-contact" id="contacto-tienda">
+        <h3>Contacto</h3>
+        <address>
+          <span><span class="k">Tienda</span>CC Galerías Innamar, local 20<br>Barrio Obrero, San Cristóbal<br>Estado Táchira, Venezuela</span>
+          <span><span class="k">WhatsApp</span><a href="https://wa.me/message/2PVRC4MJKY7KF1" target="_blank" rel="noopener noreferrer">Escríbenos aquí</a></span>
+          <span><span class="k">Instagram</span><a href="https://www.instagram.com/mentarosa.sc/" target="_blank" rel="noopener noreferrer">@mentarosa.sc</a></span>
+          <!-- PLACEHOLDER: añadir correo y teléfono oficiales cuando estén disponibles -->
+          <span class="todo"><span class="k">Correo · Teléfono</span>Por confirmar</span>
+        </address>
+      </div>
+    </div>
+    <div class="foot-legal">
+      <ul aria-label="Políticas">
+        <li><a href="#" data-placeholder="Política de privacidad">Privacidad</a></li>
+        <li><a href="#" data-placeholder="Cambios y devoluciones">Cambios y devoluciones</a></li>
+        <li><a href="#" data-placeholder="Términos y condiciones">Términos y condiciones</a></li>
+      </ul>
+      <a class="to-top" href="#" id="toTop">Volver arriba <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M6 11l6-6 6 6"/></svg></a>
+    </div>
+    <p class="foot-copy">© <span id="year">2026</span> Mentarosa Boutique · RIF V-27422158-1 · Todos los derechos reservados.</p>
+  </div>
+  <div class="foot-mark" aria-hidden="true">
+    <svg viewBox="0 0 1344 250" preserveAspectRatio="xMidYMax meet"><text x="0" y="236" font-size="272" textLength="1344" lengthAdjust="spacingAndGlyphs">MENTAROSA</text></svg>
+  </div>
+</footer>
+
+<script src="assets/js/catalog.js"></script>
+<script src="assets/js/store.js"></script>
+<script src="assets/js/site.js"></script>
+<script src="assets/js/cart-ui.js"></script>
+<script>
+/* ===== Homepage ===== */
+// Desktop: escala el escenario de 1440×900. Tablet/mobile: layout fluido por CSS.
+(function(){
+  var hero=document.getElementById('hero'), stage=document.getElementById('stage');
+  function fit(){
+    if(window.innerWidth>1100){
+      var s=Math.min(window.innerWidth/1440,1.6);
+      stage.style.transform='translateX(-50%) scale('+s+')';
+      hero.style.height=(900*s)+'px';
+    }else{ stage.style.transform=''; hero.style.height=''; }
+  }
+  fit(); addEventListener('resize',fit);
+})();
+
+// Carrusel: 3 productos visibles, el del centro es el protagonista
+(function(){
+  var root=document.getElementById('carousel'), slides=[].slice.call(root.querySelectorAll('.slide')), N=slides.length, idx=0;
+  var dotsEl=document.getElementById('dots'), timer;
+  var dots=slides.map(function(_,i){var b=document.createElement('button');b.setAttribute('aria-label','Ver producto '+(i+1));b.addEventListener('click',function(){go(i);restart();});dotsEl.appendChild(b);return b;});
+  function render(){
+    var half=Math.floor(N/2);
+    slides.forEach(function(sl,i){
+      var d=((i-idx+N+half)%N)-half;
+      sl.dataset.pos=(d>=-1&&d<=1)?d:'hidden'; sl.setAttribute('aria-hidden',d!==0);
+    });
+    dots.forEach(function(b,i){b.setAttribute('aria-current',i===idx);});
+  }
+  function go(i){idx=(i+N)%N;render();}
+  document.getElementById('next').addEventListener('click',function(){go(idx+1);restart();});
+  document.getElementById('prev').addEventListener('click',function(){go(idx-1);restart();});
+  slides.forEach(function(sl,i){sl.addEventListener('click',function(){if(i!==idx){go(i);restart();}});});
+  // favoritos / agregar: no cambian de slide
+  // favoritos y carrito: mismos módulos que el resto del sitio
+  var M=window.Mentarosa;
+  function paintFavs(){root.querySelectorAll('.slide').forEach(function(sl){var b=sl.querySelector('.fav'),on=M.Wishlist.has(sl.dataset.id);b.classList.toggle('on',on);b.setAttribute('aria-pressed',on);});}
+  root.querySelectorAll('.fav').forEach(function(b){b.addEventListener('click',function(e){e.stopPropagation();var p=M.byId(b.closest('.slide').dataset.id);if(p)M.toggleWish(p,b);});});
+  root.querySelectorAll('.add').forEach(function(b){b.addEventListener('click',function(e){e.stopPropagation();var sl=b.closest('.slide'),p=M.byId(sl.dataset.id);if(p)M.quickAdd(p,sl.querySelector('.pimg'),b);});});
+  window.addEventListener('mentarosa:wishlist',paintFavs); paintFavs();
+  // swipe
+  var x0=null;
+  root.addEventListener('pointerdown',function(e){x0=e.clientX;});
+  root.addEventListener('pointerup',function(e){if(x0===null)return;var dx=e.clientX-x0;x0=null;if(Math.abs(dx)>40){go(idx+(dx<0?1:-1));restart();}});
+  root.addEventListener('pointercancel',function(){x0=null;});
+  document.addEventListener('keydown',function(e){if(e.key==='ArrowRight'){go(idx+1);restart();}if(e.key==='ArrowLeft'){go(idx-1);restart();}});
+  // autoplay (se pausa con el mouse y respeta "reducir movimiento")
+  var reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches, paused=false;
+  function restart(){clearInterval(timer);if(!reduce)timer=setInterval(function(){if(!paused)go(idx+1);},4500);}
+  [root,document.querySelector('.c-controls')].forEach(function(el){el.addEventListener('mouseenter',function(){paused=true;});el.addEventListener('mouseleave',function(){paused=false;});});
+  render(); restart();
+})();
+
+// ===== New arrivals: productos del catálogo compartido (home:true) =====
+(function(){
+  var M=window.Mentarosa, grid=document.getElementById('productGrid');
+  var PRODUCTS=M.catalog.filter(function(p){return p.home;});
+  function render(list){
+    grid.innerHTML=list.map(function(p){return M.productCard(p);}).join('');
+    M.observe(grid.querySelectorAll('.reveal'),{step:80,threshold:.12,margin:'-5%'});
+  }
+  M.bindProductActions(grid);
+  render(PRODUCTS);
+  // carrusel: flechas, progreso, arrastre con mouse y teclado
+  var track=document.getElementById('productGrid'), prev=document.getElementById('pPrev'), next=document.getElementById('pNext'), bar=document.getElementById('pBar');
+  function step(){var c=track.querySelector('.p');return c?c.getBoundingClientRect().width+parseFloat(getComputedStyle(track).columnGap||24):300;}
+  function perView(){return Math.max(1,Math.floor(track.clientWidth/step()));}
+  function update(){
+    var max=track.scrollWidth-track.clientWidth, x=track.scrollLeft;
+    prev.disabled=x<=2; next.disabled=x>=max-2;
+    var w=Math.max(12,track.clientWidth/track.scrollWidth*100); bar.style.width=w+'%';
+    bar.style.transform='translateX('+((max>0?x/max:0)*(100/w*100-100))+'%)';
+  }
+  prev.addEventListener('click',function(){track.scrollBy({left:-step()*perView(),behavior:'smooth'});});
+  next.addEventListener('click',function(){track.scrollBy({left:step()*perView(),behavior:'smooth'});});
+  track.addEventListener('scroll',function(){requestAnimationFrame(update);},{passive:true});
+  addEventListener('resize',update);
+  track.addEventListener('keydown',function(e){if(e.key==='ArrowRight'){e.preventDefault();track.scrollBy({left:step(),behavior:'smooth'});}if(e.key==='ArrowLeft'){e.preventDefault();track.scrollBy({left:-step(),behavior:'smooth'});}});
+  var dx0=null,sl0=0,moved=false;
+  track.addEventListener('pointerdown',function(e){if(e.pointerType!=='mouse'||e.target.closest('button'))return;dx0=e.clientX;sl0=track.scrollLeft;moved=false;});
+  addEventListener('pointermove',function(e){if(dx0===null)return;var d=e.clientX-dx0;if(Math.abs(d)>5){moved=true;track.classList.add('dragging');}if(moved)track.scrollLeft=sl0-d;});
+  addEventListener('pointerup',function(){if(dx0===null)return;dx0=null;if(moved){var t=track.scrollLeft;track.classList.remove('dragging');track.scrollTo({left:Math.round(t/step())*step(),behavior:'smooth'});}});
+  track.addEventListener('dragstart',function(e){e.preventDefault();});
+  track.addEventListener('click',function(e){if(moved){e.preventDefault();e.stopPropagation();moved=false;}},true); // un arrastre no abre la ficha
+  update(); setTimeout(update,400);
+  M.renderProducts=render; // para conectar un catálogo dinámico
+})();
+</script>
+</body>
+</html>
