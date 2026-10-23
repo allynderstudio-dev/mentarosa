@@ -10,13 +10,13 @@ Sitio de Mentarosa Boutique (San Cristóbal, Táchira) en HTML, CSS y JavaScript
 - `cart.html` — carrito y pedido por WhatsApp: `/cart`
 
 ## Datos y configuración
-- `assets/js/catalog.js` — catálogo (**datos de ejemplo**: reemplazar por los productos reales)
+- `assets/js/catalog.js` — catálogo de productos (13 tenis retro a 90.000 pesos, tallas 34–40)
 - `assets/js/order.js` — número oficial de WhatsApp para pedidos
 - Carrito y favoritos se guardan en el navegador (`localStorage`), sin backend ni pagos.
 
-## Fotos pendientes
-Las imágenes que faltan muestran un marco con la ruta esperada. Guarda cada foto con ese nombre en:
-`assets/productos/`, `assets/categorias/` y `assets/campana/`.
+## Fotos
+- Productos: `assets/productos/<slug>-1.jpg`, `-2.jpg`… (la primera es la principal).
+- Pendientes: las imágenes que faltan muestran un marco con la ruta esperada, en `assets/categorias/` y `assets/campana/`.
 
 ## Probar en local
 ```bash

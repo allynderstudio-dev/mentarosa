@@ -16,7 +16,9 @@
   var LETTERS = ['XS', 'S', 'M', 'L', 'XL'];
 
   var slug = function (s) { return String(s).normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase(); };
-  CATALOG.forEach(function (p) { p.catSlug = slug(p.cat); });
+  CATALOG.forEach(function (p) { p.catSlug = slug(p.cat); if (typeof p.usd !== 'number') p.usd = p.price.amount; });
+  // categorías con productos (las vacías no se muestran en filtros ni accesos rápidos)
+  var CAT_HAS = {}; CATALOG.forEach(function (p) { CAT_HAS[p.catSlug] = true; });
 
   /* ---------- valores disponibles (derivados del catálogo) ---------- */
   var allSizes = [], allColors = [];
@@ -93,13 +95,16 @@
     return (s.q ? 1 : 0) + s.cat.length + s.talla.length + s.color.length + ((s.min > PMIN || s.max < PMAX) ? 1 : 0) + (s.disp ? 1 : 0);
   }
   var plural = function (n) { return n === 1 ? 'producto' : 'productos'; };
-  var usd = function (n) { return '$' + n; };
+  // moneda de los filtros de precio: la del catálogo si es una sola
+  var CURS = CATALOG.map(function (p) { return p.price.cur; }).filter(function (c, i, a) { return a.indexOf(c) === i; });
+  var CUR = CURS.length === 1 ? CURS[0] : 'USD';
+  var usd = function (n) { return CUR === 'USD' ? '$' + n : M.money(n, CUR); };
 
   /* ---------- construir controles ---------- */
   var $ = function (id) { return document.getElementById(id); };
   var fCat = $('fCat'), fSize = $('fSize'), fColor = $('fColor'), pMin = $('pMin'), pMax = $('pMax'), fRange = $('fRange'), fStock = $('fStock');
 
-  fCat.innerHTML = CATS.map(function (c) {
+  fCat.innerHTML = CATS.filter(function (c) { return CAT_HAS[c[0]]; }).map(function (c) {
     return '<label class="f-check"><input type="checkbox" name="cat" value="' + c[0] + '"><span class="t">' + c[1] + '</span><span class="n" data-n="' + c[0] + '">0</span></label>';
   }).join('');
   var pill = function (k, v, label, extra) {
@@ -111,7 +116,10 @@
   fColor.innerHTML = allColors.map(function (c) {
     return pill('color', c, '<i style="--c:' + COLORS[c].hex + '"></i>' + esc(COLORS[c].name), ' f-color');
   }).join('');
-  [pMin, pMax].forEach(function (r) { r.min = PMIN; r.max = PMAX; r.step = 1; });
+  [pMin, pMax].forEach(function (r) { r.min = PMIN; r.max = PMAX; r.step = Math.max(1, Math.round((PMAX - PMIN) / 100)); });
+  if (PMIN === PMAX) fRange.closest('.f-group').hidden = true;   // todos cuestan lo mismo: el filtro de precio no aporta
+  document.querySelectorAll('#quick button[data-cat]').forEach(function (b) { if (b.dataset.cat && !CAT_HAS[b.dataset.cat]) b.hidden = true; });
+  if (Object.keys(CAT_HAS).length < 2) fCat.closest('.f-group').hidden = true;   // una sola categoría: no hace falta filtrar por ella
 
   /* ---------- leer / escribir la UI ---------- */
   var applied = fromURL(), draft = null, drawerOpen = false;
@@ -141,7 +149,7 @@
   function paintCounts(s) {
     CATS.forEach(function (c) {
       var n = CATALOG.filter(function (p) { return p.catSlug === c[0] && match(p, s, 'cat'); }).length;
-      var el = fCat.querySelector('[data-n="' + c[0] + '"]'); el.textContent = n;
+      var el = fCat.querySelector('[data-n="' + c[0] + '"]'); if (!el) return; el.textContent = n;
       el.closest('.f-check').classList.toggle('zero', n === 0);
     });
   }

@@ -738,3 +738,10 @@ html.pt-leave body::after{transform:scale(.92)}
 }
 @media (hover:none){.srch-kbd{display:none}}
 @media (prefers-reduced-motion:reduce){.srch,.srch-scrim,.srch-go{transition:none!important}}
+
+/* ============ HERO · tarjetas con foto real (en lugar de recorte) ============ */
+.pimg.is-photo{aspect-ratio:4/3;overflow:hidden}
+.pimg.is-photo img{left:0;top:0;bottom:auto;width:100%;height:100%;object-fit:cover;transform:none;filter:none;transition:transform .8s cubic-bezier(.22,.9,.3,1)}
+.pcard:hover .pimg.is-photo img{transform:scale(1.05)}
+.pimg.is-photo .ptag,.pimg.is-photo .fav{z-index:2}
+@media (prefers-reduced-motion:reduce){.pimg.is-photo img{transition:none}}
