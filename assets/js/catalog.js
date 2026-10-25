@@ -106,13 +106,13 @@ window.MENTAROSA_CARE = {
   /* Jeans · 111.000 pesos · tallas 3 a 13 (cargados el 25 oct 2026) */
   add({ cat: 'Pantalones', price: 111000, sizes: ['3', '5', '7', '9', '11', '13'], date: Date.UTC(2026, 9, 25, 11),
         keywords: 'jean jeans pantalon pantalones denim mezclilla' }, [
-    ['j01', 'jean-balloon-azul-medio',  'Jean Balloon Azul Medio',  ['denim'],   3, true,  '#FBC9D9,#F4D5EA',
+    ['j01', 'jean-balloon-azul-medio',  'Jean Balloon Azul Medio',  ['denim'],   2, true,  '#FBC9D9,#F4D5EA',
       'Corte balloon de pierna curva y amplia en azul medio: cómodo, moderno y súper tendencia.',
       ['Corte balloon (pierna curva y amplia)', 'Tiro alto', 'Lavado azul medio']],
     ['j02', 'jean-flare-azul-oscuro',   'Jean Flare Azul Oscuro',   ['azul'],    2, true,  '#FDE6EE,#FFD6C7',
       'Flare de tiro alto en azul oscuro que estiliza la figura y alarga las piernas.',
       ['Bota acampanada', 'Tiro alto', 'Lavado azul oscuro']],
-    ['j03', 'jean-balloon-beige',       'Jean Balloon Beige',       ['beige'],   2, true,  '#FCEBC8,#FFF8EA',
+    ['j03', 'jean-balloon-beige',       'Jean Balloon Beige',       ['beige'],   1, true,  '#FCEBC8,#FFF8EA',
       'Balloon en beige para salir del azul de siempre: suave, luminoso y fácil de combinar.',
       ['Corte balloon (pierna curva y amplia)', 'Tiro alto', 'Tono beige']],
     ['j04', 'jean-balloon-negro',       'Jean Balloon Negro',       ['negro'],   2, false, '#FDE6EE,#FCEBC8',
@@ -127,7 +127,7 @@ window.MENTAROSA_CARE = {
     ['j07', 'jean-wide-leg-azul-medio', 'Jean Wide Leg Azul Medio', ['denim'],   2, false, '#FBC9D9,#FFD6C7',
       'Wide leg de pierna ancha y recta en azul medio: cómodo y favorecedor.',
       ['Pierna ancha y recta', 'Tiro alto', 'Lavado azul medio']],
-    ['j08', 'jean-wide-leg-azul-claro', 'Jean Wide Leg Azul Claro', ['celeste'], 2, false, '#FFF4F7,#F4D5EA',
+    ['j08', 'jean-wide-leg-azul-claro', 'Jean Wide Leg Azul Claro', ['celeste'], 1, false, '#FFF4F7,#F4D5EA',
       'Wide leg en azul claro, ligero y perfecto para looks frescos.',
       ['Pierna ancha y recta', 'Tiro alto', 'Lavado azul claro']]
   ]);
