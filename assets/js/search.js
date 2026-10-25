@@ -29,7 +29,7 @@
         '<form class="srch-bar" role="search" action="shop.html" method="get">'
       +   '<span class="srch-ic">' + SVG.search + '</span>'
       +   '<input class="srch-input" id="srchInput" name="q" type="search" autocomplete="off" spellcheck="false" maxlength="60" '
-      +     'placeholder="Busca tops, jeans, tenis, rosa…" aria-label="Buscar productos" role="combobox" aria-expanded="false" aria-controls="srchList" aria-autocomplete="list">'
+      +     'placeholder="Busca jeans, chaquetas, tenis, rosa…" aria-label="Buscar productos" role="combobox" aria-expanded="false" aria-controls="srchList" aria-autocomplete="list">'
       +   '<kbd class="srch-kbd" aria-hidden="true">Esc</kbd>'
       +   '<button class="srch-close" type="button" aria-label="Cerrar búsqueda">' + SVG.close + '</button>'
       + '</form>'
@@ -78,8 +78,9 @@
       + tag + '<span class="srch-go">' + SVG.arrow + '</span></a></li>';
   }
   function quickHTML(title) {
+    var items = QUICK.filter(function (c) { var m = c[1].match(/cat=([a-z]+)/); return !m || !M.catHasProducts || M.catHasProducts(m[1]); });
     return '<p class="srch-label">' + title + '</p><div class="srch-chips">'
-      + QUICK.map(function (c) { return '<a class="srch-chip" href="' + c[1] + '">' + c[0] + '</a>'; }).join('') + '</div>';
+      + items.map(function (c) { return '<a class="srch-chip" href="' + c[1] + '">' + c[0] + '</a>'; }).join('') + '</div>';
   }
 
   function render() {

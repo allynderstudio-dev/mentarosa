@@ -230,6 +230,23 @@
 
   paintBadges();
 
+  /* ---------- categorías sin productos: se ocultan del menú, footer, tarjetas y buscador ----------
+     Vuelven a aparecer solas en cuanto el catálogo tenga productos de esa categoría. */
+  var CAT_COUNT = {};
+  M.catalog.forEach(function (p) { var k = M.norm(p.cat); CAT_COUNT[k] = (CAT_COUNT[k] || 0) + 1; });
+  M.catHasProducts = function (slug) { return !!CAT_COUNT[M.norm(slug)]; };
+  document.querySelectorAll('a[href*="cat="]').forEach(function (a) {
+    var m = (a.getAttribute('href') || '').match(/[?&]cat=([a-z]+)/);
+    if (m && !CAT_COUNT[m[1]]) (a.closest('li') || a).classList.add('is-empty-cat');
+  });
+  // renumera las tarjetas de categoría visibles (01, 02, 03…) en el orden en que se ven en pantalla
+  function renumberCats() {
+    var cards = [].slice.call(document.querySelectorAll('.cat:not(.is-empty-cat)'));
+    cards.sort(function (a, b) { var ra = a.getBoundingClientRect(), rb = b.getBoundingClientRect(); return (Math.round(ra.top) - Math.round(rb.top)) || (ra.left - rb.left); });
+    cards.forEach(function (c, i) { var n = c.querySelector('.cat-num'); if (n) n.textContent = (i < 9 ? '0' : '') + (i + 1); });
+  }
+  if (document.querySelector('.cat')) { renumberCats(); var rt; addEventListener('resize', function () { clearTimeout(rt); rt = setTimeout(renumberCats, 150); }); }
+
   /* ---------- footer ---------- */
   var y = document.getElementById('year'); if (y) y.textContent = new Date().getFullYear();
   var top = document.getElementById('toTop');
