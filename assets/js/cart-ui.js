@@ -207,7 +207,7 @@
     var colors = (p.variantColors || []);
     var color = colors.filter(function (c) { return sizes.some(function (z) { return M.variantStock(p, c, z) > 0; }); })[0] || colors[0] || null;
     // sin variantes que elegir → se agrega directamente
-    if (!sizes.length) { M.addToCart({ productId: p.id, color: color, qty: 1 }); return; }
+    if (sizes.length <= 1) { M.addToCart({ productId: p.id, color: color, size: sizes[0], qty: 1 }); return; }   // sin tallas o talla única
     if (openQuick && openQuick.host === host) { closeQuick(true); return; }
     closeQuick(false);
     var panel = document.createElement('div');

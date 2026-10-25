@@ -54,6 +54,7 @@
     state.color = colorOpts.indexOf(q.get('color')) > -1 ? q.get('color') : (colorOpts.filter(colorHasStock)[0] || colorOpts[0]);
   }
   if (sizes.indexOf(q.get('talla')) > -1) state.size = q.get('talla');
+  if (sizes.length === 1) state.size = sizes[0];   // talla única: no hace falta elegir
 
   /* ---------- SEO básico ---------- */
   document.title = p.name + ' · Mentarosa Boutique';

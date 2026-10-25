@@ -26,8 +26,17 @@
     (p.sizes || []).forEach(function (s) { if (allSizes.indexOf(s) < 0) allSizes.push(s); });
     (p.colors || []).forEach(function (c) { if (allColors.indexOf(c) < 0) allColors.push(c); });
   });
-  var letterSizes = LETTERS.filter(function (s) { return allSizes.indexOf(s) > -1; });
-  var numSizes = allSizes.filter(function (s) { return LETTERS.indexOf(s) < 0; }).sort(function (a, b) { return a - b; });
+  // tallas agrupadas por categoría (jean 3–13 y calzado 34–40 no se mezclan); "Única" no se ofrece como filtro
+  var sizeSort = function (a, b) {
+    var ia = LETTERS.indexOf(a), ib = LETTERS.indexOf(b);
+    if (ia > -1 || ib > -1) return (ia < 0 ? 99 : ia) - (ib < 0 ? 99 : ib);
+    return (parseFloat(a) - parseFloat(b)) || String(a).localeCompare(String(b));
+  };
+  var SIZE_GROUPS = CATS.map(function (c) {
+    var sz = [];
+    CATALOG.forEach(function (p) { if (p.catSlug === c[0]) (p.sizes || []).forEach(function (s) { if (s !== 'Única' && sz.indexOf(s) < 0) sz.push(s); }); });
+    return { label: c[0] === 'pantalones' ? 'Jeans y pantalones' : c[1], sizes: sz.sort(sizeSort) };
+  }).filter(function (g) { return g.sizes.length; });
   allColors = Object.keys(COLORS).filter(function (c) { return allColors.indexOf(c) > -1; });
   var PMIN = Math.floor(Math.min.apply(null, CATALOG.map(function (p) { return p.usd; })));
   var PMAX = Math.ceil(Math.max.apply(null, CATALOG.map(function (p) { return p.usd; })));
@@ -111,12 +120,14 @@
     return '<button type="button" class="f-pill' + (extra || '') + '" data-k="' + k + '" data-v="' + esc(v) + '" aria-pressed="false">' + label + '</button>';
   };
   fSize.innerHTML =
-    (letterSizes.length ? '<p class="f-sub">Ropa</p><div class="f-pills">' + letterSizes.map(function (s) { return pill('talla', s, s); }).join('') + '</div>' : '') +
-    (numSizes.length ? '<p class="f-sub">Calzado</p><div class="f-pills">' + numSizes.map(function (s) { return pill('talla', s, s); }).join('') + '</div>' : '');
+    SIZE_GROUPS.map(function (g) {
+      return '<p class="f-sub">' + esc(g.label) + '</p><div class="f-pills">' + g.sizes.map(function (s) { return pill('talla', s, s); }).join('') + '</div>';
+    }).join('');
+  if (!SIZE_GROUPS.length) fSize.closest('.f-group').hidden = true;
   fColor.innerHTML = allColors.map(function (c) {
     return pill('color', c, '<i style="--c:' + COLORS[c].hex + '"></i>' + esc(COLORS[c].name), ' f-color');
   }).join('');
-  [pMin, pMax].forEach(function (r) { r.min = PMIN; r.max = PMAX; r.step = Math.max(1, Math.round((PMAX - PMIN) / 100)); });
+  [pMin, pMax].forEach(function (r) { r.min = PMIN; r.max = PMAX; r.step = (PMAX - PMIN) >= 5000 ? 1000 : 1; });   // en pesos: de mil en mil
   if (PMIN === PMAX) fRange.closest('.f-group').hidden = true;   // todos cuestan lo mismo: el filtro de precio no aporta
   document.querySelectorAll('#quick button[data-cat]').forEach(function (b) { if (b.dataset.cat && !CAT_HAS[b.dataset.cat]) b.hidden = true; });
   if (Object.keys(CAT_HAS).length < 2) fCat.closest('.f-group').hidden = true;   // una sola categoría: no hace falta filtrar por ella
