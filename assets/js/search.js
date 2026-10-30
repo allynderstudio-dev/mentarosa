@@ -9,8 +9,8 @@
   var M = window.Mentarosa, esc = M.esc;
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var MAX = 6;
-  var QUICK = [['Tops', 'shop.html?cat=tops'], ['Pantalones', 'shop.html?cat=pantalones'], ['Chaquetas', 'shop.html?cat=chaquetas'],
-               ['Zapatos', 'shop.html?cat=zapatos'], ['Novedades', 'shop.html?orden=novedades']];
+  var QUICK = [['Tops', 'shop?cat=tops'], ['Pantalones', 'shop?cat=pantalones'], ['Chaquetas', 'shop?cat=chaquetas'],
+               ['Zapatos', 'shop?cat=zapatos'], ['Novedades', 'shop?orden=novedades']];
   var SVG = {
     search: '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m20 20-3.8-3.8"/></svg>',
     close: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>',
@@ -26,7 +26,7 @@
     root.className = 'srch'; root.id = 'siteSearch';
     root.setAttribute('role', 'dialog'); root.setAttribute('aria-modal', 'true'); root.setAttribute('aria-label', 'Buscar productos');
     root.innerHTML =
-        '<form class="srch-bar" role="search" action="shop.html" method="get">'
+        '<form class="srch-bar" role="search" action="shop" method="get">'
       +   '<span class="srch-ic">' + SVG.search + '</span>'
       +   '<input class="srch-input" id="srchInput" name="q" type="search" autocomplete="off" spellcheck="false" maxlength="60" '
       +     'placeholder="Busca jeans, chaquetas, tenis, rosa…" aria-label="Buscar productos" role="combobox" aria-expanded="false" aria-controls="srchList" aria-autocomplete="list">'
@@ -43,7 +43,7 @@
       e.preventDefault();
       if (active > -1 && results[active]) return go(M.productUrl(results[active]));
       var q = input.value.trim();
-      go(q ? 'shop.html?q=' + encodeURIComponent(q) : 'shop.html');
+      go(q ? 'shop?q=' + encodeURIComponent(q) : 'shop');
     });
     root.querySelector('.srch-close').addEventListener('click', close);
     scrim.addEventListener('click', close);
@@ -101,7 +101,7 @@
       } else {
         body.innerHTML = '<p class="srch-label">' + all.length + (all.length === 1 ? ' producto' : ' productos') + '</p>'
           + '<ul class="srch-list" id="srchList" role="listbox" aria-label="Resultados">' + results.map(function (p, i) { return optionHTML(p, i, q); }).join('') + '</ul>'
-          + '<a class="srch-all" href="shop.html?q=' + encodeURIComponent(q) + '">Ver ' + (all.length > MAX ? 'los ' + all.length + ' resultados' : 'resultados') + ' en la tienda' + SVG.arrow + '</a>';
+          + '<a class="srch-all" href="shop?q=' + encodeURIComponent(q) + '">Ver ' + (all.length > MAX ? 'los ' + all.length + ' resultados' : 'resultados') + ' en la tienda' + SVG.arrow + '</a>';
       }
     }
     input.setAttribute('aria-expanded', results.length > 0);

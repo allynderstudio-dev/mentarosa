@@ -85,6 +85,7 @@
 .wa-btn:focus-visible{outline:3px solid rgba(239,68,121,.5);outline-offset:3px}
 .wa-ic{flex:none;width:38px;height:38px;border-radius:50%;display:grid;place-items:center;background:#25D366;box-shadow:inset 0 -2px 0 rgba(0,0,0,.12)}
 .wa-ic svg{width:21px;height:21px;fill:none;stroke:#fff;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+.wa-ic svg.ic-wa{fill:#fff;stroke:none;width:20px;height:20px}
 .cs-wa-order{width:100%;justify-content:center;margin-top:18px;padding-right:22px}
 .cs-pay-note b{color:var(--vino-900);font-weight:600}
 .cs-block{margin-top:10px;padding:10px 14px;border-radius:var(--radius-sm);background:var(--rosa-rubor);font:500 13px/19px var(--font-body);color:var(--rosa-profundo)}

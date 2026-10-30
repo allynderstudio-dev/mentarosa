@@ -37,7 +37,7 @@
 
   /* ---------- datos base ---------- */
   var catSlug = String(p.cat).normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
-  var catUrl = 'shop.html?cat=' + catSlug;
+  var catUrl = 'shop?cat=' + catSlug;
   var colorOpts = (p.variantColors || []).filter(function (c) { return COLORS[c]; });
   var sizes = (p.sizes || []).slice().sort(function (a, b) {
     var ia = LETTERS.indexOf(a), ib = LETTERS.indexOf(b);

@@ -106,7 +106,7 @@
       +   '<path d="M20 22c1 5 3 7 8 8-5 1-7 3-8 8-1-5-3-7-8-8 5-1 7-3 8-8Z" fill="#EF4479"/></svg>'
       +   '<h3>Tu carrito está esperando <em>algo lindo</em></h3>'
       +   '<p>Aún no agregaste productos. Date una vuelta por la tienda y llévate tus favoritos.</p>'
-      +   '<a class="btn btn-primary" href="shop.html">Explorar la tienda</a>'
+      +   '<a class="btn btn-primary" href="shop">Explorar la tienda</a>'
       +   '<a class="cd-wl" id="cdWl" href="wishlist" hidden>Ver mis favoritos</a>'
       + '</div></div>'
       + '<footer class="cd-foot" id="cdFoot">'

@@ -2,12 +2,12 @@
 
 Sitio de Mentarosa Boutique (San Cristóbal, Táchira) en HTML, CSS y JavaScript, sin frameworks ni build.
 
-## Páginas
-- `index.html` — homepage
-- `shop.html` — tienda con filtros (estado en la URL)
-- `product.html` — plantilla única de ficha: `/products/<slug>`
-- `wishlist.html` — favoritos: `/wishlist`
-- `cart.html` — carrito y pedido por WhatsApp: `/cart`
+## Páginas (URLs limpias, sin .html)
+- `/` → `index.html` — homepage
+- `/shop` → `shop.html` — tienda con filtros (estado en la URL)
+- `/products/<slug>` → `product.html` — plantilla única de ficha
+- `/wishlist` → `wishlist.html` — favoritos
+- `/cart` → `cart.html` — carrito y pedido por WhatsApp
 
 ## Datos y configuración
 - `assets/js/catalog.js` — catálogo de productos, todo en pesos colombianos:
