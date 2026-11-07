@@ -89,7 +89,7 @@ window.MENTAROSA_CARE = {
     ['c02', 'chaqueta-militar-marfil',      'Chaqueta Militar Marfil',      ['crema'],    1, true,  '#FFF8EA,#FCEBC8',
       'En tono marfil con botones plateados, la tercera pieza perfecta para looks claros y delicados.',
       ['Cuello alto', 'Cierre frontal', 'Botones metálicos plateados', 'Bolsillos con solapa']],
-    ['c03', 'chaqueta-militar-azul-marino', 'Chaqueta Militar Azul Marino', ['azul'],     1, false, '#F4D5EA,#FDE6EE',
+    ['c03', 'chaqueta-militar-azul-marino', 'Chaqueta Militar Azul Marino', ['azul'],     1, true,  '#F4D5EA,#FDE6EE',
       'Azul marino con botones dorados: un clásico que eleva cualquier outfit, de jeans a vestidos.',
       ['Cuello alto', 'Cierre frontal', 'Botones metálicos dorados', 'Hombreras estilo militar']],
     ['c04', 'chaqueta-militar-negra',       'Chaqueta Militar Negra',       ['negro'],    1, false, '#FDE6EE,#FCEBC8',

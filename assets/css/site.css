@@ -430,6 +430,8 @@ button{font:inherit;cursor:pointer;border:0;background:none;color:inherit}
   .camp-title .l2{padding-left:8vw}
   .cp-a{order:2;width:78%;align-self:flex-start;aspect-ratio:4/5}
   .cp-b{order:3;width:62%;align-self:flex-end;margin-top:-16vw;aspect-ratio:5/4;z-index:3}
+  .cp-a .cp-tag{left:16px;bottom:calc(16vw + 18px);transform:none}   /* arriba de la zona que tapa Look 02 */
+  .cp-a:hover .cp-tag{--tx:0}
   .camp-copy{order:4;max-width:560px;margin-top:40px;padding:0}
   .camp-deco:last-child{display:none}
   .camp-sticker{left:auto;right:calc(22% - 40px);top:auto;bottom:auto;width:92px;height:92px;font-size:15px;order:2}
