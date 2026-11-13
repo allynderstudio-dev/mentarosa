@@ -67,13 +67,15 @@ let dummyHash = null;
 /* ---------- Agencia (superadmin) ---------- */
 export const superEmails = (env) => String(env.SUPERADMIN_EMAILS || '').split(',').map(normEmail).filter(Boolean);
 export const isSuper = (env, email) => superEmails(env).includes(normEmail(email));
+// nombre que se muestra siempre para la Agencia (no se toma de Google)
+export const superName = (env) => String(env.SUPERADMIN_NAME || 'Allynder Studio').slice(0, 120);
 /** Garantiza que la Agencia exista, esté activa y aceptada (no depende de invitaciones). */
 export async function ensureSuper(db, env, email) {
   if (!isSuper(env, email)) return;
   await db.query(
-    `insert into admin_users (email, role, accepted_at) values ($1, 'owner', now())
-     on conflict (email) do update set active = true, role = 'owner', accepted_at = coalesce(admin_users.accepted_at, now())`,
-    [normEmail(email)]);
+    `insert into admin_users (email, name, role, accepted_at) values ($1, $2, 'owner', now())
+     on conflict (email) do update set name = excluded.name, active = true, role = 'owner', accepted_at = coalesce(admin_users.accepted_at, now())`,
+    [normEmail(email), superName(env)]);
 }
 const INVITE_DAYS = 7;
 /** Crea un enlace de invitación nuevo (invalida los anteriores). Devuelve el token. */
@@ -140,7 +142,8 @@ export async function getAdmin(request, env) {
   if (new Date(u.expires_at).getTime() - Date.now() < 15 * 86400e3) {
     await db.query(`update admin_sessions set expires_at = now() + interval '${SESSION_DAYS} days' where token_hash = $1`, [await sha256(token)]);
   }
-  return { id: String(u.id), email: u.email, name: u.name, role: isSuper(env, u.email) ? 'superadmin' : u.role, has_password: u.has_password };
+  const sup = isSuper(env, u.email);
+  return { id: String(u.id), email: u.email, name: sup ? superName(env) : u.name, role: sup ? 'superadmin' : u.role, has_password: u.has_password };
 }
 
 /* ---------- límite de intentos ---------- */
@@ -227,7 +230,7 @@ async function googleCallback(request, env, url) {
   }
   if (!rows.length) { await recordAttempt(db, email, ip, false); return fail('not_allowed'); }
   await recordAttempt(db, email, ip, true);
-  if (!rows[0].name && claims.name) await db.query('update admin_users set name = $2 where id = $1', [rows[0].id, String(claims.name).slice(0, 120)]);
+  if (!rows[0].name && claims.name && !isSuper(env, email)) await db.query('update admin_users set name = $2 where id = $1', [rows[0].id, String(claims.name).slice(0, 120)]);
   const cookie = await createSession(env, request, rows[0].id);
   return redirect(saved.next || '/admin/', [cookie, setCookie(url, 'admin_oauth', '', 0)]);
 }

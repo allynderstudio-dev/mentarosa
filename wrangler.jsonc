@@ -23,6 +23,7 @@
   "vars": {
     // Agencia: acceso total y permanente en todos los dashboards (separar varios con coma)
     "SUPERADMIN_EMAILS": "allynder.studio@gmail.com",
+    "SUPERADMIN_NAME": "Allynder Studio",
     "MEDIA_PREFIX": "mentarosa",
     "CATEGORIES": "Tops,Pantalones,Chaquetas,Zapatos",
     // Login con Google (opcional). Cliente OAuth de la agencia; el secreto va con:

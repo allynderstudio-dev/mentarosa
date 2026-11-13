@@ -13,7 +13,7 @@
    <MEDIA_PREFIX>/catalog.json en R2 y la tienda lee ese archivo.
    ===================================================================== */
 import { getDb } from './db.js';
-import { getAdmin, authApi, hashPassword, passwordProblem, verifyPassword, normEmail, validEmail, isSuper, createInvite } from './auth.js';
+import { getAdmin, authApi, hashPassword, passwordProblem, verifyPassword, normEmail, validEmail, isSuper, superName, createInvite } from './auth.js';
 
 const MAX_IMAGE_BYTES = 8 * 1024 * 1024;
 const IMAGE_TYPES = { 'image/webp': 'webp', 'image/jpeg': 'jpg', 'image/png': 'png', 'image/avif': 'avif' };
@@ -216,7 +216,7 @@ async function adminApi(request, env, url, admin) {
              u.password_hash is not null as has_password, inv.email as invited_by_email,
              (select max(i.expires_at) from admin_invites i where i.user_id = u.id and i.used_at is null) as invite_expires_at
         from admin_users u left join admin_users inv on inv.id = u.invited_by`;
-    const shape = (u) => ({ ...u, id: String(u.id), is_super: isSuper(env, u.email), role: isSuper(env, u.email) ? 'superadmin' : u.role });
+    const shape = (u) => { const sup = isSuper(env, u.email); return { ...u, id: String(u.id), is_super: sup, name: sup ? superName(env) : u.name, role: sup ? 'superadmin' : u.role }; };
     const inviteUrl = (token) => `${url.origin}/admin/invite#${token}`;
     async function target(id) {
       const rows = await db.query('select id, email, accepted_at from admin_users where id = $1', [id]);
