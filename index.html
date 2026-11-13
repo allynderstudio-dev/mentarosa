@@ -337,9 +337,24 @@
   </div>
 </footer>
 
+<script src="assets/js/catalog-config.js"></script>
 <script src="assets/js/catalog.js"></script>
 <script src="assets/js/store.js"></script>
 <script src="assets/js/site.js"></script>
+<script>
+/* Carrusel de portada: nombre, precio y enlace salen del catálogo publicado (dashboard).
+   La foto y su encuadre se mantienen fijos aquí porque están elegidos a mano. */
+(function () {
+  var M = window.Mentarosa; if (!M || !M.byId) return;
+  document.querySelectorAll('#carousel .slide[data-id]').forEach(function (s) {
+    var p = M.byId(s.getAttribute('data-id')); if (!p) return;
+    var a = s.querySelector('h3 a'), price = s.querySelector('.price');
+    s.setAttribute('data-name', p.name);
+    if (a) { a.textContent = p.name; a.setAttribute('href', M.productUrl(p)); }
+    if (price) price.innerHTML = M.money(p.price.amount, p.price.cur) + (p.old ? ' <s>' + M.money(p.old, p.price.cur) + '</s>' : '');
+  });
+})();
+</script>
 <script src="assets/js/cart-ui.js"></script>
 <script src="assets/js/search.js"></script>
 <script>

@@ -2,3 +2,8 @@
 .DS_Store
 __pycache__/
 *.pyc
+.wrangler
+.dev-data
+.dev.vars
+node_modules
+dist

@@ -1,0 +1,30 @@
+{
+  "name": "mentarosa",
+  "version": "1.0.0",
+  "description": "Tienda Mentarosa + dashboard de productos (Cloudflare Workers, Neon, R2)",
+  "scripts": {
+    "dev:local": "node dev/server.mjs",
+    "dev:local:seed": "node dev/server.mjs --seed",
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "migrate": "node scripts/migrate.mjs",
+    "user": "node scripts/user.mjs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/allynderstudio-dev/mentarosa.git"
+  },
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/allynderstudio-dev/mentarosa/issues"
+  },
+  "homepage": "https://github.com/allynderstudio-dev/mentarosa#readme",
+  "dependencies": {
+    "@neondatabase/serverless": "^1.2.0"
+  },
+  "devDependencies": {
+    "@electric-sql/pglite": "^0.5.16",
+    "wrangler": "^4.161.0"
+  },
+  "private": true
+}

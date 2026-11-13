@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Productos · Mentarosa</title>
+<link rel="icon" href="/assets/logo-mentarosa-circle.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Fredoka:wght@600&display=swap">
+<link rel="stylesheet" href="/admin/admin.css">
+</head>
+<body>
+<header class="top">
+  <a class="brand" href="#/"><img src="/assets/logo-mentarosa-circle.png" alt=""><span>Mentarosa <em>Productos</em></span></a>
+  <div class="top-right">
+    <a class="btn ghost sm" href="/" target="_blank" rel="noopener">Ver tienda ↗</a>
+    <div class="menu" id="menu">
+      <button class="menu-btn" id="menuBtn" aria-haspopup="true" aria-expanded="false"><span class="who" id="who"></span><b id="avatar">·</b></button>
+      <div class="menu-pop" id="menuPop" hidden>
+        <div class="who-line" id="whoLine"></div>
+        <a href="#/">Productos</a>
+        <a href="#/usuarios" id="usersLink" hidden>Usuarios</a>
+        <a href="#/cuenta">Mi contraseña</a>
+        <button type="button" id="logout">Cerrar sesión</button>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main id="app" aria-live="polite"><p class="loading">Cargando…</p></main>
+
+<div class="toast" id="toast" role="status"></div>
+
+<dialog id="confirm">
+  <form method="dialog">
+    <h2 id="confirmTitle">¿Seguro?</h2>
+    <p id="confirmText"></p>
+    <div class="row end">
+      <button class="btn ghost" value="no">Cancelar</button>
+      <button class="btn danger" value="yes" id="confirmYes">Eliminar</button>
+    </div>
+  </form>
+</dialog>
+
+<script src="/assets/js/catalog-config.js"></script>
+<script src="/admin/admin.js"></script>
+</body>
+</html>
