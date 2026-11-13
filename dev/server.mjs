@@ -86,6 +86,7 @@ const env = {
   __db: db, MEDIA, ASSETS,
   MEDIA_PREFIX: 'mentarosa',
   CATEGORIES: 'Tops,Pantalones,Chaquetas,Zapatos',
+  SUPERADMIN_EMAILS: 'dev@localhost.test',
   GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID || '',
   GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET || ''
 };
@@ -94,7 +95,7 @@ const env = {
 const DEV_USER = { email: 'dev@localhost.test', password: 'mentarosa-dev-2026' };
 if (!(await db.query('select 1 from admin_users limit 1')).length) {
   const { hashPassword } = await import('../worker/auth.js');
-  await db.query("insert into admin_users (email, name, role, password_hash) values ($1, 'Dev local', 'owner', $2)", [DEV_USER.email, await hashPassword(DEV_USER.password)]);
+  await db.query("insert into admin_users (email, name, role, password_hash, accepted_at) values ($1, 'Dev local', 'owner', $2, now())", [DEV_USER.email, await hashPassword(DEV_USER.password)]);
 }
 
 if (process.argv.includes('--seed')) {

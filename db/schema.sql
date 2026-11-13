@@ -76,3 +76,17 @@ create table if not exists login_attempts (               -- límite de intentos
 );
 create index if not exists login_attempts_email_idx on login_attempts (email, created_at desc);
 create index if not exists login_attempts_ip_idx on login_attempts (ip, created_at desc);
+
+-- Invitaciones: solo entra quien aceptó una invitación (o la Agencia, definida en SUPERADMIN_EMAILS)
+alter table admin_users add column if not exists accepted_at timestamptz;
+alter table admin_users add column if not exists invited_by uuid references admin_users(id) on delete set null;
+update admin_users set accepted_at = coalesce(last_login_at, created_at) where accepted_at is null and last_login_at is not null;
+
+create table if not exists admin_invites (
+  token_hash  text primary key,                          -- SHA-256 del token del enlace (el token no se guarda)
+  user_id     uuid not null references admin_users(id) on delete cascade,
+  expires_at  timestamptz not null,
+  used_at     timestamptz,
+  created_at  timestamptz not null default now()
+);
+create index if not exists admin_invites_user_idx on admin_invites (user_id);

@@ -464,46 +464,83 @@
   }
 
   /* =====================================================================
-     USUARIOS (solo dueños)
+     USUARIOS (Agencia y Administradores) · solo por invitación
      ===================================================================== */
+  var ROLE_LABEL = { superadmin: 'Agencia', owner: 'Administrador', editor: 'Editor' };
+  function canManageUsers() { return state.me.role === 'superadmin' || state.me.role === 'owner'; }
+
   function usersView() {
     document.title = 'Usuarios · Mentarosa';
-    if (state.me.role !== 'owner') { app.innerHTML = '<div class="empty">Solo un dueño puede administrar usuarios. <a href="#/">Volver</a></div>'; return; }
+    if (!canManageUsers()) { app.innerHTML = '<div class="empty">Solo un administrador puede gestionar usuarios. <a href="#/">Volver</a></div>'; return; }
     app.innerHTML =
-      '<div class="list-head"><div><h1>Usuarios</h1><p>Quién puede entrar a este panel.</p></div></div>' +
+      '<div class="list-head"><div><h1>Usuarios</h1><p>El acceso es solo por invitación.</p></div></div>' +
       '<div id="err"></div>' +
-      '<section class="panel"><h2>Dar acceso</h2>' +
-        '<form class="form-row" id="addForm" novalidate>' +
+      '<section class="panel"><h2>Invitar a alguien</h2>' +
+        '<form class="form-row invite-row" id="addForm" novalidate>' +
           '<label class="field"><span>Correo</span><input type="text" id="u-email" inputmode="email" autocomplete="off" placeholder="persona@gmail.com"></label>' +
           '<label class="field"><span>Nombre <small>(opcional)</small></span><input type="text" id="u-name" maxlength="120"></label>' +
-          '<label class="field"><span>Rol</span><select id="u-role"><option value="editor">Editor</option><option value="owner">Dueño</option></select></label>' +
-          '<label class="field"><span>Contraseña <small>(opcional)</small></span><input type="password" id="u-pass" autocomplete="new-password" placeholder="mín. 10 caracteres"></label>' +
-          '<button class="btn" type="submit">Agregar</button>' +
+          '<label class="field"><span>Rol</span><select id="u-role"><option value="editor">Editor</option><option value="owner">Administrador</option></select></label>' +
+          '<button class="btn" type="submit">Crear invitación</button>' +
         '</form>' +
-        '<p class="hint">Sin contraseña, la persona entra con "Continuar con Google" usando ese mismo correo. Editor: maneja productos. Dueño: además administra usuarios.</p>' +
+        '<p class="hint"><b>Administrador:</b> hace todo, incluso invitar y quitar usuarios. <b>Editor:</b> solo productos. La cuenta de la agencia tiene acceso permanente y nadie la puede quitar.</p>' +
+        '<div id="inviteBox"></div>' +
       '</section>' +
-      '<section class="panel"><h2>Con acceso</h2><table class="users"><thead><tr><th>Persona</th><th>Rol</th><th>Acceso</th><th>Último ingreso</th><th></th></tr></thead><tbody id="rows"><tr><td colspan="5">Cargando…</td></tr></tbody></table></section>';
+      '<section class="panel"><h2>Con acceso</h2><table class="users"><thead><tr><th>Persona</th><th>Rol</th><th>Estado</th><th>Último ingreso</th><th></th></tr></thead><tbody id="rows"><tr><td colspan="5">Cargando…</td></tr></tbody></table></section>';
     var $ = function (id) { return document.getElementById(id); };
     function showErr(m) { $('err').innerHTML = m ? '<div class="err">' + esc(m) + '</div>' : ''; }
+    var fmt = function (d) { return new Date(d).toLocaleString('es-CO', { dateStyle: 'medium', timeStyle: 'short' }); };
+
+    function showInvite(u, link) {
+      var msg = 'Hola' + (u.name ? ' ' + u.name : '') + ', te invito al panel de productos de Mentarosa. Entra con este enlace (vence en 7 días): ' + link;
+      $('inviteBox').innerHTML =
+        '<div class="invite-box"><b>Invitación lista para ' + esc(u.email) + '</b>' +
+        '<p>Envíale este enlace. Sirve una sola vez y vence en 7 días.</p>' +
+        '<div class="invite-link"><input type="text" readonly id="invLink" value="' + esc(link) + '"><button class="btn sm" id="copyInv" type="button">Copiar</button></div>' +
+        '<div class="row"><a class="btn ghost sm" target="_blank" rel="noopener" href="https://wa.me/?text=' + encodeURIComponent(msg) + '">Enviar por WhatsApp</a>' +
+        '<a class="btn ghost sm" href="mailto:' + encodeURIComponent(u.email) + '?subject=' + encodeURIComponent('Invitación al panel de Mentarosa') + '&body=' + encodeURIComponent(msg) + '">Enviar por correo</a></div></div>';
+      $('copyInv').onclick = function () {
+        var inp = $('invLink'); inp.select();
+        (navigator.clipboard ? navigator.clipboard.writeText(inp.value) : Promise.reject()).then(function () { toast('Enlace copiado'); }, function () { document.execCommand('copy'); toast('Enlace copiado'); });
+      };
+      $('inviteBox').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
     function load() { return api('GET', 'users').then(function (r) { paint(r.users); }).catch(function (e) { showErr(e.message); }); }
     function paint(users) {
+      users.sort(function (a, b) { return (b.is_super - a.is_super) || (a.created_at < b.created_at ? -1 : 1); });
       $('rows').innerHTML = users.map(function (u) {
-        var me = u.id === state.me.id;
-        return '<tr data-id="' + esc(u.id) + '"><td><b>' + esc(u.name || u.email) + (me ? ' (tú)' : '') + '</b>' + (u.name ? '<small>' + esc(u.email) + '</small>' : '') + '</td>' +
-          '<td>' + (u.role === 'owner' ? 'Dueño' : 'Editor') + (u.active ? '' : ' · <span class="badge out">Desactivado</span>') + '</td>' +
-          '<td>' + (u.has_password ? 'Google y contraseña' : 'Solo Google') + '</td>' +
-          '<td>' + (u.last_login_at ? esc(new Date(u.last_login_at).toLocaleString('es-CO', { dateStyle: 'medium', timeStyle: 'short' })) : '<small>Nunca</small>') + '</td>' +
-          '<td><div class="acts">' + (me ? '' :
-            '<button class="btn ghost sm" data-a="role">' + (u.role === 'owner' ? 'Hacer editor' : 'Hacer dueño') + '</button>' +
-            '<button class="btn ghost sm" data-a="active">' + (u.active ? 'Desactivar' : 'Activar') + '</button>' +
-            '<button class="btn link" data-a="del">Quitar</button>') + '</div></td></tr>';
+        var me = u.id === state.me.id, pending = !u.accepted_at, expired = pending && (!u.invite_expires_at || new Date(u.invite_expires_at) < new Date());
+        var status = !u.active ? '<span class="badge out">Desactivado</span>'
+          : u.is_super ? '<span class="badge tag">Acceso permanente</span>'
+          : pending ? (expired ? '<span class="badge out">Invitación vencida</span>' : '<span class="badge home">Invitación pendiente</span><small>vence ' + esc(fmt(u.invite_expires_at)) + '</small>')
+          : '<span class="badge tag">Activo</span>';
+        var acts = '';
+        if (!me && !u.is_super) {
+          if (pending) acts += '<button class="btn ghost sm" data-a="link">Nuevo enlace</button>';
+          acts += '<button class="btn ghost sm" data-a="role">' + (u.role === 'owner' ? 'Hacer editor' : 'Hacer administrador') + '</button>';
+          if (!pending) acts += '<button class="btn ghost sm" data-a="active">' + (u.active ? 'Desactivar' : 'Activar') + '</button>';
+          acts += '<button class="btn link" data-a="del">' + (pending ? 'Cancelar invitación' : 'Quitar') + '</button>';
+        }
+        return '<tr data-id="' + esc(u.id) + '"><td><b>' + esc(u.name || u.email) + (me ? ' (tú)' : '') + '</b>' + (u.name ? '<small>' + esc(u.email) + '</small>' : '') +
+          (u.invited_by_email && !u.is_super ? '<small>Invitado por ' + esc(u.invited_by_email) + '</small>' : '') + '</td>' +
+          '<td>' + (ROLE_LABEL[u.role] || u.role) + '</td>' +
+          '<td>' + status + '</td>' +
+          '<td>' + (u.last_login_at ? esc(fmt(u.last_login_at)) : '<small>Nunca</small>') + '</td>' +
+          '<td><div class="acts">' + acts + '</div></td></tr>';
       }).join('');
       $('rows').onclick = function (e) {
         var b = e.target.closest('button'); if (!b) return;
         var id = b.closest('tr').dataset.id, u = users.filter(function (x) { return x.id === id; })[0];
+        if (b.dataset.a === 'link') {
+          api('POST', 'users/' + id + '/invite').then(function (r) { showInvite(u, r.invite_url); load(); }).catch(function (er) { toast(er.message, true); });
+          return;
+        }
         if (b.dataset.a === 'del') {
-          confirmBox('¿Quitar el acceso de ' + u.email + '?', 'Ya no podrá entrar al panel. Puedes volver a agregarlo cuando quieras.', 'Quitar acceso').then(function (ok) {
-            if (ok) api('DELETE', 'users/' + id).then(function () { toast('Acceso quitado'); load(); }).catch(function (er) { toast(er.message, true); });
+          var pending = !u.accepted_at;
+          confirmBox(pending ? '¿Cancelar la invitación de ' + u.email + '?' : '¿Quitar el acceso de ' + u.email + '?',
+            pending ? 'El enlace que le enviaste dejará de funcionar.' : 'Ya no podrá entrar al panel. Puedes volver a invitarlo cuando quieras.',
+            pending ? 'Cancelar invitación' : 'Quitar acceso').then(function (ok) {
+            if (ok) api('DELETE', 'users/' + id).then(function () { toast(pending ? 'Invitación cancelada' : 'Acceso quitado'); $('inviteBox').innerHTML = ''; load(); }).catch(function (er) { toast(er.message, true); });
           });
           return;
         }
@@ -514,9 +551,8 @@
     $('addForm').addEventListener('submit', function (e) {
       e.preventDefault(); showErr('');
       var body = { email: $('u-email').value.trim(), name: $('u-name').value.trim(), role: $('u-role').value };
-      if ($('u-pass').value) body.password = $('u-pass').value;
-      api('POST', 'users', body).then(function () {
-        $('addForm').reset(); toast('Acceso agregado'); load();
+      api('POST', 'users', body).then(function (r) {
+        $('addForm').reset(); showInvite(r.user, r.invite_url); load();
       }).catch(function (er) { showErr(er.message); });
     });
     load();
@@ -555,8 +591,8 @@
     var label = state.me.name || state.me.email;
     document.getElementById('who').textContent = label;
     document.getElementById('avatar').textContent = label.trim().charAt(0).toUpperCase();
-    document.getElementById('whoLine').textContent = state.me.email + ' · ' + (state.me.role === 'owner' ? 'Dueño' : 'Editor');
-    document.getElementById('usersLink').hidden = state.me.role !== 'owner';
+    document.getElementById('whoLine').textContent = state.me.email + ' · ' + (ROLE_LABEL[state.me.role] || state.me.role);
+    document.getElementById('usersLink').hidden = !canManageUsers();
     btn.addEventListener('click', function (e) { e.stopPropagation(); pop.hidden = !pop.hidden; btn.setAttribute('aria-expanded', String(!pop.hidden)); });
     document.addEventListener('click', function (e) { if (!pop.hidden && !pop.contains(e.target)) { pop.hidden = true; btn.setAttribute('aria-expanded', 'false'); } });
     pop.addEventListener('click', function (e) { if (e.target.closest('a')) pop.hidden = true; });

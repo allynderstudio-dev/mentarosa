@@ -4,11 +4,13 @@
   var params = new URLSearchParams(location.search);
   var next = params.get('next') || '/admin/';
   var ERRORS = {
-    not_allowed: 'Esa cuenta de Google no tiene acceso a este panel. Pide a un dueño que agregue tu correo.',
+    not_allowed: 'Esa cuenta no tiene acceso a este panel. El acceso es solo por invitación.',
     google_state: 'El inicio de sesión con Google expiró. Inténtalo de nuevo.',
     google_token: 'Google no confirmó tu cuenta. Inténtalo de nuevo.',
     google_off: 'El inicio de sesión con Google no está activado en este sitio.',
-    limit: 'Demasiados intentos. Espera 15 minutos.'
+    limit: 'Demasiados intentos. Espera 15 minutos.',
+    invite_invalid: 'La invitación no es válida o ya venció. Pide un enlace nuevo.',
+    invite_email: 'Esa cuenta de Google no es la del correo invitado. Usa la cuenta correcta o crea una contraseña desde el enlace.'
   };
   var err = document.getElementById('err');
   function showErr(msg) { err.innerHTML = msg ? '<div class="err"></div>' : ''; if (msg) err.firstChild.textContent = msg; }

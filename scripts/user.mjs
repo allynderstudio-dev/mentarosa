@@ -39,7 +39,7 @@ if (cmd === 'list') {
 } else if (cmd === 'add') {
   if (!validEmail(email)) { console.error('Correo no válido'); process.exit(1); }
   const role = rest.includes('--owner') ? 'owner' : 'editor';
-  await db.query('insert into admin_users (email, role) values ($1, $2) on conflict (email) do update set role = excluded.role, active = true', [email, role]);
+  await db.query('insert into admin_users (email, role, accepted_at) values ($1, $2, now()) on conflict (email) do update set role = excluded.role, active = true, accepted_at = coalesce(admin_users.accepted_at, now())', [email, role]);
   console.log(`Listo: ${email} (${role === 'owner' ? 'dueño' : 'editor'}). Puede entrar con Google; para contraseña: npm run user -- password ${email}`);
 } else if (cmd === 'password') {
   const rows = await db.query('select id from admin_users where email = $1', [email]);

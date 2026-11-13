@@ -21,6 +21,8 @@
   // Bucket de la agencia, compartido: cada cliente usa su propia carpeta (MEDIA_PREFIX)
   "r2_buckets": [{ "binding": "MEDIA", "bucket_name": "allynder-media" }],
   "vars": {
+    // Agencia: acceso total y permanente en todos los dashboards (separar varios con coma)
+    "SUPERADMIN_EMAILS": "allynder.studio@gmail.com",
     "MEDIA_PREFIX": "mentarosa",
     "CATEGORIES": "Tops,Pantalones,Chaquetas,Zapatos",
     // Login con Google (opcional). Cliente OAuth de la agencia; el secreto va con:

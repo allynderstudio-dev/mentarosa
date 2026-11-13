@@ -4,14 +4,18 @@ Plantilla de la agencia para tiendas estáticas con catálogo editable. Mentaros
 
 ## Estado en producción (13-11-2026)
 
-- Tienda: https://mentarosaboutique.com (y www) servida por el Worker `mentarosa`. Vercel ya no recibe tráfico.
-- Dashboard: https://mentarosaboutique.com/admin/ · login propio (correo + contraseña o Google). Usuarios en la tabla `admin_users`; se administran en el dashboard → menú → Usuarios. Dueño inicial: `allynder.studio@gmail.com`.
+- Tienda: https://mentarosaboutique.com (y www) servida por el Worker `mentarosa`. El proyecto de Vercel se eliminó (13-11-2026).
+- Dashboard: https://mentarosaboutique.com/admin/ · login propio (correo + contraseña o Google), **solo por invitación**.
+- Roles:
+  - **Agencia** (`SUPERADMIN_EMAILS` en `wrangler.jsonc`, hoy `allynder.studio@gmail.com`): acceso total y permanente. Su usuario se crea solo al primer ingreso; nadie lo puede quitar, desactivar ni cambiar desde el panel.
+  - **Administrador** (cliente): todo, incluso invitar, cambiar de rol y quitar a otros, menos tocar a la Agencia.
+  - **Editor**: solo productos.
+- Invitaciones: dashboard → menú → Usuarios → "Crear invitación". Genera un enlace `/admin/invite#…` de un solo uso que vence en 7 días (se copia o se envía por WhatsApp/correo). La persona crea su contraseña o acepta con Google usando ese mismo correo. Sin invitación aceptada no se puede entrar.
 - Google: proyecto de Google Cloud "Allynder Dashboards", cliente OAuth "Dashboards web" (uno para toda la agencia). Está en modo *Prueba*: solo entran con Google los correos agregados como "usuarios de prueba" en Google Auth Platform → Público. Para quitar ese límite hay que completar la marca (página de inicio y política de privacidad) y publicar la app.
 - Neon: proyecto `mentarosa` (AWS US East 1), base `neondb`.
 - R2: bucket `allynder-media`, carpeta `mentarosa/`.
-- Para dar acceso a otra persona: dashboard → Usuarios → Dar acceso (con contraseña, o sin ella para que entre con Google). Si es con Google y la app sigue en modo Prueba, agrega también su correo como usuario de prueba en Google.
-- Cloudflare Access ya no se usa (se borró la aplicación). La suscripción Zero Trust Free ($0) sigue activa y se puede cancelar en Billing.
-- Volver a Vercel en caso de emergencia: quitar `routes` del Worker y crear en DNS los CNAME de `@` y `www` a `7618d2d3819d2187.vercel-dns-017.com` (sin proxy).
+- Si alguien entra con Google y la app de Google sigue en modo Prueba, agrega también su correo como usuario de prueba en Google Auth Platform → Público (con contraseña no hace falta).
+- Cloudflare Access ya no se usa: se borró la aplicación y se canceló la suscripción Zero Trust.
 
 ## Cómo funciona
 
@@ -65,14 +69,10 @@ Tienda en http://localhost:8787 y dashboard en http://localhost:8787/admin/. Usa
    npm run deploy
    ```
    Queda en `https://mentarosa.<tu-subdominio>.workers.dev` para probar antes de mover el dominio.
-5. **Primer usuario dueño** (entra con Google):
-   ```bash
-   npm run user -- add correo@dominio.com --owner
-   ```
-   Para que además tenga contraseña: `npm run user -- password correo@dominio.com`.
+5. **Acceso de la agencia**: no hay que hacer nada; `SUPERADMIN_EMAILS` ya trae `allynder.studio@gmail.com` y su usuario se crea al primer ingreso. Desde el panel se invita al cliente como Administrador. (Si hiciera falta por terminal: `npm run user -- add correo --owner` y `npm run user -- password correo`.)
 6. **Google**: en el cliente OAuth de la agencia (Google Cloud → Allynder Dashboards → Clientes → Dashboards web) agrega `https://<dominio>/api/auth/google/callback`. Guarda el secreto con `npx wrangler secret put GOOGLE_CLIENT_SECRET` y pon el Client ID en `GOOGLE_CLIENT_ID` de `wrangler.jsonc`.
 7. **Mover el dominio desde Vercel**: en Cloudflare → DNS de `mentarosaboutique.com`, borra los registros que apuntan a Vercel (`64.29.17.1`, `216.198.79.1` y el `www`). Descomenta `routes` en `wrangler.jsonc` y corre `npm run deploy`. Cloudflare crea los registros y el certificado solo (minutos).
-8. **Cerrar Vercel**: fusiona esta rama en `main` y desconecta el proyecto de Vercel (si no, seguirá construyendo en cada push). Para despliegue automático en cada push, conecta el repo en Workers → mentarosa → Settings → Builds (comando de despliegue: `npm run deploy`).
+8. **Cerrar Vercel**: borra el proyecto en Vercel (Settings → Delete Project). Para despliegue automático en cada push, conecta el repo en Workers → mentarosa → Settings → Builds (comando de despliegue: `npm run deploy`).
 
 ## Replicar en otro cliente
 

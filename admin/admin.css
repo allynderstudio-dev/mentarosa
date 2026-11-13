@@ -221,3 +221,12 @@ dialog{margin:auto}
 @media (max-width:860px){.form-row{grid-template-columns:1fr 1fr}}
 .form-row .field{margin-bottom:0}
 .hint{color:var(--ink-3);font-size:13px;margin-top:10px}
+
+/* invitaciones */
+.invite-row{grid-template-columns:2fr 1.4fr 1fr auto}
+@media (max-width:860px){.invite-row{grid-template-columns:1fr 1fr}}
+.invite-box{margin-top:16px;padding:14px;border:1px solid var(--accent);border-radius:var(--radius);background:var(--accent-tint)}
+.invite-box p{color:var(--ink-2);font-size:13px;margin:4px 0 10px}
+.invite-link{display:flex;gap:8px;margin-bottom:10px}
+.invite-link input{flex:1;min-width:0;height:36px;border:1px solid var(--line);border-radius:8px;padding:0 10px;font-size:13px;background:#fff}
+.users td small{margin-top:2px}

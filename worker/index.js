@@ -13,7 +13,7 @@
    <MEDIA_PREFIX>/catalog.json en R2 y la tienda lee ese archivo.
    ===================================================================== */
 import { getDb } from './db.js';
-import { getAdmin, authApi, hashPassword, passwordProblem, verifyPassword, normEmail, validEmail } from './auth.js';
+import { getAdmin, authApi, hashPassword, passwordProblem, verifyPassword, normEmail, validEmail, isSuper, createInvite } from './auth.js';
 
 const MAX_IMAGE_BYTES = 8 * 1024 * 1024;
 const IMAGE_TYPES = { 'image/webp': 'webp', 'image/jpeg': 'jpg', 'image/png': 'png', 'image/avif': 'avif' };
@@ -207,43 +207,69 @@ async function adminApi(request, env, url, admin) {
     return json({ ok: true });
   }
 
-  // Usuarios del dashboard (solo dueños)
+  // Usuarios del dashboard: Agencia y Administradores. Solo por invitación.
   if (parts[0] === 'users') {
-    if (admin.role !== 'owner') return fail(403, 'Solo un dueño puede administrar usuarios');
+    if (admin.role !== 'superadmin' && admin.role !== 'owner') return fail(403, 'Solo un administrador puede gestionar usuarios');
     const uid = parts[1];
-    const USER_COLS = `id, email, name, role, active, password_hash is not null as has_password, last_login_at, created_at`;
-    if (!uid && method === 'GET') {
-      return json({ users: await db.query(`select ${USER_COLS} from admin_users order by created_at`) });
+    const LIST_SQL = `
+      select u.id, u.email, u.name, u.role, u.active, u.accepted_at, u.last_login_at, u.created_at,
+             u.password_hash is not null as has_password, inv.email as invited_by_email,
+             (select max(i.expires_at) from admin_invites i where i.user_id = u.id and i.used_at is null) as invite_expires_at
+        from admin_users u left join admin_users inv on inv.id = u.invited_by`;
+    const shape = (u) => ({ ...u, id: String(u.id), is_super: isSuper(env, u.email), role: isSuper(env, u.email) ? 'superadmin' : u.role });
+    const inviteUrl = (token) => `${url.origin}/admin/invite#${token}`;
+    async function target(id) {
+      const rows = await db.query('select id, email, accepted_at from admin_users where id = $1', [id]);
+      if (!rows.length) throw new HttpError(404, 'Usuario no encontrado');
+      if (isSuper(env, rows[0].email)) throw new HttpError(403, 'La cuenta de la agencia tiene acceso permanente y no se puede modificar');
+      return rows[0];
     }
+
+    // GET /api/admin/users
+    if (!uid && method === 'GET') {
+      const rows = await db.query(LIST_SQL + ' order by u.created_at');
+      return json({ users: rows.map(shape) });
+    }
+    // POST /api/admin/users { email, name?, role } → invitación
     if (!uid && method === 'POST') {
       const b = await readJson(request);
       const email = normEmail(b.email); if (!validEmail(email)) bad('Correo no válido');
+      if (isSuper(env, email)) bad('Esa cuenta es de la agencia y ya tiene acceso permanente');
       const role = b.role === 'owner' ? 'owner' : 'editor';
-      let hash = null;
-      if (b.password) { const problem = passwordProblem(b.password); if (problem) bad(problem); hash = await hashPassword(b.password); }
+      let rows;
       try {
-        const rows = await db.query(`insert into admin_users (email, name, role, password_hash) values ($1, $2, $3, $4) returning ${USER_COLS}`,
-          [email, str(b.name, 120, 'el nombre'), role, hash]);
-        return json({ user: rows[0] }, 201);
-      } catch (e) { if (/unique|duplicate/i.test(String(e.message))) bad('Ese correo ya tiene acceso'); throw e; }
+        rows = await db.query('insert into admin_users (email, name, role, invited_by) values ($1, $2, $3, $4) returning id',
+          [email, str(b.name, 120, 'el nombre'), role, admin.id]);
+      } catch (e) { if (/unique|duplicate/i.test(String(e.message))) bad('Ese correo ya tiene acceso o una invitación pendiente'); throw e; }
+      const token = await createInvite(db, rows[0].id);
+      const user = (await db.query(LIST_SQL + ' where u.id = $1', [rows[0].id]))[0];
+      return json({ user: shape(user), invite_url: inviteUrl(token) }, 201);
     }
-    if (uid && method === 'PUT') {
+    // POST /api/admin/users/:id/invite → enlace nuevo (invalida el anterior)
+    if (uid && parts[2] === 'invite' && method === 'POST') {
+      const t = await target(uid);
+      if (t.accepted_at) bad('Esta persona ya aceptó su invitación');
+      return json({ invite_url: inviteUrl(await createInvite(db, uid)) });
+    }
+    // PUT /api/admin/users/:id { role?, active? }
+    if (uid && !parts[2] && method === 'PUT') {
       const b = await readJson(request);
-      if (uid === admin.id && (b.role === 'editor' || b.active === false)) bad('No puedes quitarte el acceso de dueño a ti mismo');
+      if (uid === admin.id) bad('No puedes cambiar tu propio rol ni desactivarte');
+      await target(uid);
       const sets = [], vals = [uid];
       if (b.role === 'owner' || b.role === 'editor') { vals.push(b.role); sets.push(`role = $${vals.length}::text`); }
       if (typeof b.active === 'boolean') { vals.push(b.active); sets.push(`active = $${vals.length}::boolean`); }
-      if (b.password) { const problem = passwordProblem(b.password); if (problem) bad(problem); vals.push(await hashPassword(b.password)); sets.push(`password_hash = $${vals.length}::text`); }
       if (!sets.length) bad('Nada que cambiar');
-      const rows = await db.query(`update admin_users set ${sets.join(', ')} where id = $1 returning ${USER_COLS}`, vals);
-      if (!rows.length) return fail(404, 'Usuario no encontrado');
-      if (b.active === false || b.password) await db.query('delete from admin_sessions where user_id = $1', [uid]);
-      return json({ user: rows[0] });
+      await db.query(`update admin_users set ${sets.join(', ')} where id = $1`, vals);
+      if (b.active === false) await db.query('delete from admin_sessions where user_id = $1', [uid]);
+      const user = (await db.query(LIST_SQL + ' where u.id = $1', [uid]))[0];
+      return json({ user: shape(user) });
     }
-    if (uid && method === 'DELETE') {
+    // DELETE /api/admin/users/:id
+    if (uid && !parts[2] && method === 'DELETE') {
       if (uid === admin.id) bad('No puedes eliminarte a ti mismo');
-      const rows = await db.query('delete from admin_users where id = $1 returning id', [uid]);
-      if (!rows.length) return fail(404, 'Usuario no encontrado');
+      await target(uid);
+      await db.query('delete from admin_users where id = $1', [uid]);
       return json({ ok: true });
     }
   }
@@ -425,7 +451,7 @@ export default {
   }
 };
 
-const PUBLIC_ADMIN = ['/admin/login', '/admin/login.html', '/admin/login.js', '/admin/admin.css'];
+const PUBLIC_ADMIN = ['/admin/login', '/admin/login.html', '/admin/login.js', '/admin/invite', '/admin/invite.html', '/admin/invite.js', '/admin/admin.css'];
 // páginas del dashboard: sin caché, sin iframes y fuera de buscadores
 async function adminAsset(request, env) {
   const res = await env.ASSETS.fetch(request);
