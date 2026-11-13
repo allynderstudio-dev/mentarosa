@@ -1,0 +1,33 @@
+/* Worker de Mentarosa: tienda estática + dashboard (/admin).
+   Para replicar en otro cliente: cambia "name", MEDIA_PREFIX, CATEGORIES y la ruta del dominio,
+   y define el secreto DATABASE_URL (Neon) con: npx wrangler secret put DATABASE_URL */
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "mentarosa",
+  "main": "worker/index.js",
+  "workers_dev": true,
+  "preview_urls": false,
+  "compatibility_date": "2026-10-01",
+  // copia a dist/ solo los archivos públicos (ver scripts/build.mjs)
+  "build": { "command": "node scripts/build.mjs" },
+  "assets": {
+    "directory": "dist",
+    "binding": "ASSETS",
+    "html_handling": "auto-trailing-slash",
+    "not_found_handling": "404-page",
+    // solo estas rutas despiertan al Worker; el resto se sirve directo (gratis e ilimitado)
+    "run_worker_first": ["/api/*", "/media/*", "/products/*", "/admin", "/admin/*", "/assets/js/catalog.js"]
+  },
+  // Bucket de la agencia, compartido: cada cliente usa su propia carpeta (MEDIA_PREFIX)
+  "r2_buckets": [{ "binding": "MEDIA", "bucket_name": "allynder-media" }],
+  "vars": {
+    "MEDIA_PREFIX": "mentarosa",
+    "CATEGORIES": "Tops,Pantalones,Chaquetas,Zapatos",
+    // Login con Google (opcional). Cliente OAuth de la agencia; el secreto va con:
+    //   npx wrangler secret put GOOGLE_CLIENT_SECRET
+    "GOOGLE_CLIENT_ID": "216758048780-h5g4h8dst4huj31la87ie3ban1dbh3aa.apps.googleusercontent.com"
+  },
+  // Dominio propio (antes en Vercel: CNAME 7618d2d3819d2187.vercel-dns-017.com en apex y www)
+  "routes": [{ "pattern": "mentarosaboutique.com", "custom_domain": true }, { "pattern": "www.mentarosaboutique.com", "custom_domain": true }],
+  "observability": { "enabled": true }
+}

@@ -1,6 +1,6 @@
 # Mentarosa Boutique · sitio web
 
-Sitio de Mentarosa Boutique (San Cristóbal, Táchira) en HTML, CSS y JavaScript, sin frameworks ni build.
+Sitio de Mentarosa Boutique (San Cristóbal, Táchira) en HTML, CSS y JavaScript, sin frameworks. Los productos se administran desde un dashboard propio (/admin).
 
 ## Páginas (URLs limpias, sin .html)
 - `/` → `index.html` — homepage
@@ -10,29 +10,25 @@ Sitio de Mentarosa Boutique (San Cristóbal, Táchira) en HTML, CSS y JavaScript
 - `/cart` → `cart.html` — carrito y pedido por WhatsApp
 
 ## Datos y configuración
-- `assets/js/catalog.js` — catálogo de productos, todo en pesos colombianos:
-  - 6 chaquetas militares · 100.000 · talla única
-  - 8 jeans · 111.000 · tallas 3 a 13
-  - 13 tenis retro · 90.000 · tallas 34 a 40
+- **Productos**: se editan en el dashboard `/admin` (Postgres en Neon + fotos en R2). Ver [DASHBOARD.md](DASHBOARD.md).
+- `assets/js/catalog-config.js` — colores, cuidados y categorías (fijos, los comparten tienda y dashboard).
+- `assets/js/catalog.js` — respaldo estático del catálogo. En producción el Worker sirve en esa ruta el catálogo publicado desde el dashboard.
 - `assets/js/order.js` — número oficial de WhatsApp para pedidos
 - Carrito y favoritos se guardan en el navegador (`localStorage`), sin backend ni pagos.
 
 ## Fotos
-- Productos: `assets/productos/<slug>-1.jpg`, `-2.jpg`… (la primera es la principal).
+- Productos: se suben desde el dashboard y quedan en R2 (`/media/products/<id>/…`). `assets/productos/` conserva las originales para el respaldo estático y la portada.
 - Categorías: `assets/categorias/<categoría>.jpg` (falta `tops.jpg`).
 - Pendientes: las imágenes que faltan muestran un marco con la ruta esperada (`assets/categorias/tops.jpg` y `assets/campana/`).
 
 ## Probar en local
 ```bash
-python3 serve.py
+npm install
+npm run dev:local:seed
 ```
-Abre http://localhost:8080 (imita las rutas de Vercel).
+Tienda en http://localhost:8787 y dashboard en http://localhost:8787/admin/ (sin cuentas: Postgres embebido y R2 simulado).
+
+Solo la tienda, sin dashboard: `python3 serve.py` → http://localhost:8080 (usa el catálogo estático).
 
 ## Publicar
-El repositorio está conectado a Vercel: cada `git push` a la rama `main` publica el sitio automáticamente.
-
-```bash
-git add -A && git commit -m "Describe el cambio" && git push
-```
-
-Alternativa manual (sin pasar por GitHub): `npx vercel --prod`
+Cloudflare Workers (`npm run deploy`). Pasos de la primera puesta en producción y de cómo replicarlo en otro cliente en [DASHBOARD.md](DASHBOARD.md).

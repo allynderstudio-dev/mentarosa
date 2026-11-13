@@ -1,0 +1,5 @@
+# Copia este archivo como .dev.vars (nunca se sube al repo)
+# Cadena de Neon (Connect → Connection pooling apagado). La usan migrate, user y wrangler dev.
+DATABASE_URL=postgresql://usuario:clave@ep-xxxx.us-east-1.aws.neon.tech/neondb?sslmode=require
+# Opcional, para probar "Continuar con Google" con wrangler dev
+GOOGLE_CLIENT_SECRET=
